@@ -20,7 +20,7 @@ export class UsersService {
 
   /**
    * getUsers
- :User[]  */
+   */
   public getUsers(getUsersArgs: GetUsersArgs): User[] {
     // return getUsersArgs.userId.map((userId) => this.getUser(userId));
     return getUsersArgs.userIds.map((userId) => this.getUser({ userId }));
@@ -40,7 +40,7 @@ export class UsersService {
 
   /**
    * updateUser
- :User  */
+   */
   public updateUser(updateUserData: UpdateUserInput): User {
     const user = this.users.find(
       (user) => user.userId === updateUserData.userId,
@@ -52,7 +52,7 @@ export class UsersService {
 
   /**
    * deleteUser
- :User  */
+   */
   public deleteUser(deleteUserData: DeleteUserInput): User {
     const userIndex = this.users.findIndex(
       (user) => user.userId === deleteUserData.userId,
