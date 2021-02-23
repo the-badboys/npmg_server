@@ -1,4 +1,6 @@
+import { Inject } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { PrismaService } from 'src/prisma.service';
 import { GetUserArgs } from './dto/args/getUser.args';
 import { GetUsersArgs } from './dto/args/getUsers.args';
 import { CreateUserInput } from './dto/input/create-user.input';
@@ -9,7 +11,15 @@ import { UsersService } from './users.service';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    @Inject(PrismaService) private prismaService: PrismaService,
+  ) {}
+
+  @Query(() => User, { name: 'getUsers', nullable: true })
+  getusers() {
+    return this.userService.getusers();
+  }
 
   @Query(() => User, { name: 'user', nullable: true })
   getUser(@Args() getUserArgs: GetUserArgs): User {

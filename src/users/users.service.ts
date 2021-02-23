@@ -6,10 +6,18 @@ import { UpdateUserInput } from './dto/input/update-user-input';
 import { GetUserArgs } from './dto/args/getUser.args';
 import { GetUsersArgs } from './dto/args/getUsers.args';
 import { DeleteUserInput } from './dto/input/delete-user.input';
+import { PrismaService } from 'src/prisma.service';
+import { TestUser } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
+  constructor(private prisma: PrismaService) {}
+
   private users: User[] = [];
+
+  public async getusers(): Promise<TestUser[]> {
+    return this.prisma.testUser.findMany();
+  }
 
   /**
    * getUsers
