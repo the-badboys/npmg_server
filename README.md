@@ -26,3 +26,10 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Db setup
+
+```bash
+  # if prisma setup is changed
+  npx prisma migrate dev --preview-feature
+```
