@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './models/user';
+import { User } from './user';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateUserInput } from './dto/input/create-user.input';
 import { UpdateUserInput } from './dto/input/update-user-input';
@@ -7,69 +7,74 @@ import { GetUserArgs } from './dto/args/getUser.args';
 import { GetUsersArgs } from './dto/args/getUsers.args';
 import { DeleteUserInput } from './dto/input/delete-user.input';
 import { PrismaService } from 'src/prisma.service';
-import { TestUser } from '@prisma/client';
+import { Prisma, TestUser } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  private users: User[] = [];
+  // private users: User[] = [];
 
-  public async getusers(): Promise<TestUser[]> {
+  public async users(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.UserWhereUniqueInput;
+    where?: Prisma.UserWhereInput;
+  }): Promise<TestUser[]> {
     return this.prisma.testUser.findMany();
   }
 
   /**
    * getUsers
    */
-  public getUser(getUserArgs: GetUserArgs): User {
-    return this.users.find((user) => user.userId === getUserArgs.userId);
-  }
+  // public getUser(getUserArgs: GetUserArgs): User {
+  //   return this.users.find((user) => user.userId === getUserArgs.userId);
+  // }
 
   /**
    * getUsers
    */
-  public getUsers(getUsersArgs: GetUsersArgs): User[] {
-    // return getUsersArgs.userId.map((userId) => this.getUser(userId));
-    return getUsersArgs.userIds.map((userId) => this.getUser({ userId }));
-  }
+  // public getUsers(getUsersArgs: GetUsersArgs): User[] {
+  //   // return getUsersArgs.userId.map((userId) => this.getUser(userId));
+  //   return getUsersArgs.userIds.map((userId) => this.getUser({ userId }));
+  // }
 
   /**
    * createUser
    */
-  public createUser(createUserData: CreateUserInput): User {
-    const user: User = {
-      userId: uuidv4(),
-      ...createUserData,
-    };
-    this.users.push(user);
-    return user;
-  }
+  // public createUser(createUserData: CreateUserInput): User {
+  //   const user: User = {
+  //     userId: uuidv4(),
+  //     ...createUserData,
+  //   };
+  //   this.users.push(user);
+  //   return user;
+  // }
 
   /**
    * updateUser
    */
-  public updateUser(updateUserData: UpdateUserInput): User {
-    const user = this.users.find(
-      (user) => user.userId === updateUserData.userId,
-    );
+  // public updateUser(updateUserData: UpdateUserInput): User {
+  //   const user = this.users.find(
+  //     (user) => user.userId === updateUserData.userId,
+  //   );
 
-    Object.assign(user, updateUserData);
-    return user;
-  }
+  //   Object.assign(user, updateUserData);
+  //   return user;
+  // }
 
   /**
    * deleteUser
-   */
-  public deleteUser(deleteUserData: DeleteUserInput): User {
-    const userIndex = this.users.findIndex(
-      (user) => user.userId === deleteUserData.userId,
-    );
+  //  */
+  // public deleteUser(deleteUserData: DeleteUserInput): User {
+  //   const userIndex = this.users.findIndex(
+  //     (user) => user.userId === deleteUserData.userId,
+  //   );
 
-    const user = this.users[userIndex];
+  //   const user = this.users[userIndex];
 
-    this.users.splice(userIndex);
+  //   this.users.splice(userIndex);
 
-    return user;
-  }
+  //   return user;
+  // }
 }
