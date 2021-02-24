@@ -14,8 +14,8 @@ export class User {
   @Field(type => String)
   lastName: string;
 
-  @Field()
-  role: string;
+  @Field(type => ROLES)
+  role: ROLES;
 
   @Field(type => String)
   createdAt: Date;
@@ -28,4 +28,7 @@ export enum ROLES {
   DOCTOR = 'DOCTOR',
 }
 
-registerEnumType(ROLES, { name: 'ROLES' });
+registerEnumType(ROLES, {
+  name: 'ROLES',
+  description: 'Role of users',
+});
