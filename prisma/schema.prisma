@@ -15,3 +15,20 @@ model TestUser {
   email String  @unique
   name  String?
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String
+  lastName  String
+  role      Role     @default(USER)
+  password  String
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+  RANGER
+  DOCTOR
+}
