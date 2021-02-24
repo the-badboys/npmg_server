@@ -30,6 +30,7 @@ model npmg{
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   isSilverBacked Boolean @default(false)
+  families     families   @relation(fields: [family], references: [id])
 }
 
 model families{
