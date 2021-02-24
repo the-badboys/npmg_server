@@ -3,7 +3,7 @@ import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 @ObjectType()
 export class User {
   @Field(type => ID)
-  id: number;
+  id: string;
 
   @Field(type => String)
   email: string;

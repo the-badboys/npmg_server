@@ -34,7 +34,7 @@ export class UsersResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(returns => User, { nullable: true, name: 'getUser' })
-  async user(@Args('id') id: number, @Context() ctx) {
+  async user(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.users.findUnique({
       where: { id },
     });
