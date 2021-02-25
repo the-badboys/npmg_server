@@ -6,9 +6,11 @@ import {
   Mutation,
   Context,
 } from '@nestjs/graphql';
+import { from } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { Family } from './dto/family';
 import {NewFamily} from './inputs/create.input'
+import {UpdateFamily} from './inputs/update.input'
 
 @Resolver(Family)
 export class FamiliesResolver {
@@ -22,6 +24,18 @@ export class FamiliesResolver {
   async family(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.families.findUnique({
       where: { id },
+    });
+  }
+  @Mutation(returns => Family, { nullable: true, name: 'updateFamily' })
+  async updatefamily(@Args('family_update') family: UpdateFamily, @Context() ctx) {
+    return this.prismaService.families.update({
+      where: {
+        id: family.family_id,
+      },
+      data: {
+        family_name: family.data.family_name,
+        leader: family.data.leader
+      },
     });
   }
 
