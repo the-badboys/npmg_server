@@ -5,12 +5,29 @@ import {
   Args,
   Mutation,
   Context,
+  Field,
+  InputType,
 } from '@nestjs/graphql';
-import { User } from './dto/user';
-import {SingUpUserInput} from './inputs/create.input';
+import { ROLES, User } from './user';
 import { PrismaService } from 'src/prisma.service';
 
+@InputType()
+export class SingUpUserInput {
+  @Field()
+  email: string;
 
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  password: string;
+
+  @Field(type => ROLES)
+  role: ROLES;
+}
 
 @Resolver(User)
 export class UsersResolver {
@@ -21,6 +38,16 @@ export class UsersResolver {
     return this.prismaService.users.findUnique({
       where: { id },
     });
+  }
+
+  //TODO: Handle login of the users
+  @Mutation(resturns => String, { nullable: false, name: 'login' })
+  async loginUser(@Args('id') id: string, @Context() ctx) {}
+
+  //TODO: Get currently loggedin user
+  @Query(returns => User, { nullable: true, name: 'me' })
+  async getLoggedIn(@Context() ctx) {
+    console.log(ctx);
   }
 
   @Mutation(returns => User)

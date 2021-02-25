@@ -10,13 +10,12 @@ import { NamersModule } from './namers/namers.module';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      
     }),
     UsersModule,
     NpmgModule,
     FamiliesModule,
     ReportsModule,
-    NamersModule
+    NamersModule,
   ],
   controllers: [],
   providers: [],
