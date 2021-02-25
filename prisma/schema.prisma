@@ -37,6 +37,7 @@ model families{
   id String @id @default(uuid())
   family_name String   @unique
   leader String @unique
+
 }
 
 enum Role {
