@@ -10,6 +10,7 @@ import { PrismaService } from 'src/prisma.service';
 import { Family } from './dto/family';
 import {NewFamily} from './inputs/create.input'
 import {UpdateFamily} from './inputs/update.input'
+import {AuthenticationError, UserInputError} from 'apollo-server-express'
 
 @Resolver(Family)
 export class FamiliesResolver {
@@ -27,6 +28,12 @@ export class FamiliesResolver {
   }
   @Mutation(returns => Family, { nullable: true, name: 'updateFamily' })
   async updatefamily(@Args('family_update') family: UpdateFamily, @Context() ctx) {
+    const npmg = await this.prismaService.users.findUnique({
+      where: { id:family.data.leader },
+    });
+    if(!npmg){
+      return new UserInputError("Leader not found")
+    }
     return this.prismaService.families.update({
       where: {
         id: family.family_id,
@@ -40,6 +47,12 @@ export class FamiliesResolver {
 
   @Mutation(returns => Family)
   async addNewFamily(@Args('data') data: NewFamily, @Context() ctx) {
+    const npmg = await this.prismaService.users.findUnique({
+      where: { id:data.leader },
+    });
+    if(!npmg){
+      return new UserInputError("Gorilla not found")
+    }
     return this.prismaService.families.create({
       data: {
         leader: data.leader,

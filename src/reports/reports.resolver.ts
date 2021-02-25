@@ -10,6 +10,7 @@ import {
   import {UpdateReport} from './inputs/update.input'
   import {Report} from './dto/reports'
   import { PrismaService } from 'src/prisma.service';
+  import {AuthenticationError, UserInputError} from 'apollo-server-express'
 
 @Resolver()
 export class ReportsResolver {
@@ -26,6 +27,18 @@ export class ReportsResolver {
   }
   @Mutation(returns => Report)
   async NewReport(@Args('data') data: NewReport, @Context() ctx) {
+    const user = await this.prismaService.users.findUnique({
+      where: { id:data.reporter },
+    });
+    if(!user){
+      return new UserInputError("Ranger not found")
+    }
+    const npmg = await this.prismaService.users.findUnique({
+      where: { id:data.gorilla },
+    });
+    if(!npmg){
+      return new UserInputError("Gorilla not found")
+    }
     return this.prismaService.reports.create({
       data: {
         gorilla: data.gorilla,
@@ -63,8 +76,20 @@ export class ReportsResolver {
       },
     })
   }
-  @Mutation(returns => Report, { nullable: true, name: 'updateNpmg' })
+  @Mutation(returns => Report, { nullable: true, name: 'updateReport' })
   async updatenpmg(@Args('report_update') report: UpdateReport, @Context() ctx) {
+    const user = await this.prismaService.users.findUnique({
+      where: { id:report.data.reporter },
+    });
+    if(!user){
+      return new UserInputError("Ranger not found")
+    }
+    const npmg = await this.prismaService.users.findUnique({
+      where: { id:report.data.gorilla },
+    });
+    if(!npmg){
+      return new UserInputError("Gorilla not found")
+    }
     return this.prismaService.reports.update({
       where: {
         id: report.report_id,
