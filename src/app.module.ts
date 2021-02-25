@@ -4,6 +4,7 @@ import { UsersModule } from './users/users.module';
 import { NpmgModule } from './npmg/npmg.module';
 import { FamiliesModule } from './families/families.module';
 import { ReportsModule } from './reports/reports.module';
+import { NamersModule } from './namers/namers.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { ReportsModule } from './reports/reports.module';
     UsersModule,
     NpmgModule,
     FamiliesModule,
-    ReportsModule
+    ReportsModule,
+    NamersModule
   ],
   controllers: [],
   providers: [],

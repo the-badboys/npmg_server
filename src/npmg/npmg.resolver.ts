@@ -27,7 +27,7 @@ export class NpmgResolver {
     });
   }
   @Mutation(returns => Npmg, { nullable: true, name: 'updateNpmg' })
-  async updatenpmg(@Args('npmg_update') npmg: UpdateNpmg, @Context() ctx) {
+  async updatenpmg(@Args('update') npmg: UpdateNpmg, @Context() ctx) {
     const m_npmg = await this.prismaService.npmg.findUnique({
       where: { id:npmg.data.mother },
     });
