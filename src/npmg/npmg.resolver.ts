@@ -5,47 +5,28 @@ import {
   Args,
   Mutation,
   Context,
-  InputType,
-  Field,
 } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
-import { Npmg } from './npmg';
+import { Npmg } from './dto/npmg';
+import {NewNpmg} from './inputs/create.input'
 
-@InputType()
-class NewNpmg {
-  @Field()
-  name: string;
-
-  @Field()
-  mother: string;
-
-  @Field()
-  father: string;
-
-  @Field()
-  dob: string;
-
-  @Field()
-  family: string;
-
-  @Field()
-  isSilverBacked: boolean;
-
-}
 
 @Resolver(Npmg)
 export class NpmgResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
-
+  @Query(returns => [Npmg], { nullable: true, name: 'getAllNpmg' })
+  async allNpmg(@Context() ctx) {
+    return this.prismaService.npmg.findMany({});
+  }
   @Query(returns => Npmg, { nullable: true, name: 'getNpmg' })
-  async family(@Args('id') id: string, @Context() ctx) {
+  async npmg(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.npmg.findUnique({
       where: { id },
     });
   }
 
   @Mutation(returns => Npmg)
-  async addNewFamily(@Args('data') data: NewNpmg, @Context() ctx) {
+  async newNpmg(@Args('data') data: NewNpmg, @Context() ctx) {
     return this.prismaService.npmg.create({
       data: {
         name: data.name,

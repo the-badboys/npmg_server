@@ -5,26 +5,19 @@ import {
   Args,
   Mutation,
   Context,
-  InputType,
-  Field,
 } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
-import { Family } from './family';
-
-@InputType()
-class NewFamily {
-  @Field()
-  family_name: string;
-
-  @Field()
-  leader: string;
-
-}
+import { Family } from './dto/family';
+import {NewFamily} from './inputs/create.input'
 
 @Resolver(Family)
 export class FamiliesResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
+  @Query(returns => [Family], { nullable: true, name: 'getFamilies' })
+  async families(@Context() ctx) {
+    return this.prismaService.families.findMany({});
+  }
   @Query(returns => Family, { nullable: true, name: 'getFamily' })
   async family(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.families.findUnique({

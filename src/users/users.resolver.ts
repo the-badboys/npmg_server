@@ -5,29 +5,12 @@ import {
   Args,
   Mutation,
   Context,
-  InputType,
-  Field,
 } from '@nestjs/graphql';
-import { ROLES, User } from './user';
+import { User } from './dto/user';
+import {SingUpUserInput} from './inputs/create.input';
 import { PrismaService } from 'src/prisma.service';
 
-@InputType()
-class SingUpUserInput {
-  @Field()
-  email: string;
 
-  @Field()
-  firstName: string;
-
-  @Field()
-  lastName: string;
-
-  @Field()
-  password: string;
-
-  @Field(type => ROLES)
-  role: ROLES;
-}
 
 @Resolver(User)
 export class UsersResolver {
