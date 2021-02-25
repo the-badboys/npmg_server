@@ -7,6 +7,7 @@ import {
   } from '@nestjs/graphql';
   import { Inject } from '@nestjs/common';
   import {NewReport} from './inputs/create.input'
+  import {UpdateReport} from './inputs/update.input'
   import {Report} from './dto/reports'
   import { PrismaService } from 'src/prisma.service';
 
@@ -35,6 +36,24 @@ export class ReportsResolver {
         head: data.head,
         stomach: data.stomach,
         eyes: data.eyes,
+      },
+    });
+  }
+  @Mutation(returns => Report, { nullable: true, name: 'updateNpmg' })
+  async updatenpmg(@Args('report_update') report: UpdateReport, @Context() ctx) {
+    return this.prismaService.reports.update({
+      where: {
+        id: report.report_id,
+      },
+      data: {
+        gorilla: report.data.gorilla,
+        date: report.data.date,
+        reporter: report.data.reporter,
+        lungs: report.data.lungs,
+        legs: report.data.legs,
+        head: report.data.head,
+        stomach: report.data.stomach,
+        eyes: report.data.eyes,
       },
     });
   }
