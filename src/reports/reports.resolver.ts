@@ -24,7 +24,7 @@ export class ReportsResolver {
     });
   }
   @Mutation(returns => Report)
-  async create(@Args('data') data: NewReport, @Context() ctx) {
+  async NewReport(@Args('data') data: NewReport, @Context() ctx) {
     return this.prismaService.reports.create({
       data: {
         gorilla: data.gorilla,
