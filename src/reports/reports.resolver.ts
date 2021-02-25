@@ -39,6 +39,30 @@ export class ReportsResolver {
       },
     });
   }
+  @Query(returns => [Report],{name: "getDayReport"})
+  async report_date(@Args('date') report: Date, @Context() ctx){
+    return this.prismaService.reports.findMany({
+      where: {
+        date: report,
+      },
+    })
+  }
+  @Query(returns => [Report],{name: "getWeekReport"})
+  async report_week(@Args('date') report: Date, @Context() ctx){
+    return this.prismaService.reports.findMany({
+      where: {
+        date: report,
+      },
+    })
+  }
+  @Query(returns => [Report],{name: "getMonthReport"})
+  async report_month(@Args('date') report: Date, @Context() ctx){
+    return this.prismaService.reports.findMany({
+      where: {
+        date: report,
+      },
+    })
+  }
   @Mutation(returns => Report, { nullable: true, name: 'updateNpmg' })
   async updatenpmg(@Args('report_update') report: UpdateReport, @Context() ctx) {
     return this.prismaService.reports.update({
