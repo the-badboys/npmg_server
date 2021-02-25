@@ -9,6 +9,8 @@ export class Npmg {
     @Field(type => String)
     mother: string;
     @Field(type => String)
+    gender: string;
+    @Field(type => String)
     father: string;
     @Field(type => String)
     family: string;

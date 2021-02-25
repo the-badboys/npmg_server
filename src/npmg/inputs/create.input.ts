@@ -15,6 +15,9 @@ export class NewNpmg {
   father: string;
 
   @Field({nullable: true})
+  gender: string;
+
+  @Field({nullable: true})
   dob: string;
 
   @Field({nullable: true})

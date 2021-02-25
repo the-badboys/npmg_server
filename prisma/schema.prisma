@@ -26,6 +26,7 @@ model npmg{
   mother String
   father String
   family String
+  gender String @default("male")
   dob String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())

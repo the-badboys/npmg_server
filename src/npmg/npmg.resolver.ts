@@ -58,6 +58,7 @@ export class NpmgResolver {
         father: npmg.data.father,
         isSilverBacked: npmg.data.isSilverBacked,
         family: npmg.data.family,
+        gender: npmg.data.gender
       },
     });
   }
@@ -89,6 +90,7 @@ export class NpmgResolver {
         father: data.father,
         isSilverBacked: data.isSilverBacked,
         family: data.family,
+        gender: data.gender,
       },
     });
   }
