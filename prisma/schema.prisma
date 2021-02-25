@@ -39,10 +39,30 @@ model families{
   leader String @unique
 
 }
-
+model reports{
+  id String @id @default(uuid())
+  gorilla String
+  date   DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  reporter String
+  lungs reportStatus @default(NSA)
+  heart reportStatus @default(NSA)
+  legs reportStatus @default(NSA)
+  head reportStatus @default(NSA)
+  eyes reportStatus @default(NSA)
+  stomach reportStatus @default(NSA)
+  users     users   @relation(fields: [reporter], references: [id])
+  npmg     npmg   @relation(fields: [gorilla], references: [id])
+}
 enum Role {
   USER
   ADMIN
   RANGER
   DOCTOR
+}
+enum reportStatus {
+  NSA
+  ASN
+  SAN
 }
