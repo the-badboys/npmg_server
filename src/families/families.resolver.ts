@@ -6,7 +6,6 @@ import {
   Mutation,
   Context,
 } from '@nestjs/graphql';
-import { from } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { Family } from './dto/family';
 import {NewFamily} from './inputs/create.input'
@@ -47,6 +46,12 @@ export class FamiliesResolver {
         family_name: data.family_name,
         
       },
+    });
+  }
+  @Mutation(returns => Family, { nullable: true, name: 'deleteFamily' })
+  async delete(@Args('id') id: string, @Context() ctx) {
+    return this.prismaService.families.delete({
+      where: { id },
     });
   }
 }

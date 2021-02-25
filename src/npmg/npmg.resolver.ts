@@ -54,4 +54,10 @@ export class NpmgResolver {
       },
     });
   }
+  @Mutation(returns => Npmg, { nullable: true, name: 'deleteNpmg' })
+  async delete(@Args('id') id: string, @Context() ctx) {
+    return this.prismaService.npmg.delete({
+      where: { id },
+    });
+  }
 }
