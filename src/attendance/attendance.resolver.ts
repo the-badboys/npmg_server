@@ -11,6 +11,7 @@ import {
   import {Attendance} from './dto/attendance'
   import { PrismaService } from 'src/prisma.service';
   import {AuthenticationError, UserInputError} from 'apollo-server-express'
+ import { DateRange } from './inputs/date.input';
 
 @Resolver(Attendance)
 export class AttendanceResolver {
@@ -35,6 +36,17 @@ export class AttendanceResolver {
     async day_attendance(@Args('date') day: Date, @Context() ctx) {
       return this.prismaService.attendance.findMany({
         where: { date: day },
+      });
+    }
+    @Query(returns => [Attendance], { nullable: true, name: 'getDateRangeAttendance' })
+    async week_attendance(@Args('range') range: DateRange, @Context() ctx) {
+      return this.prismaService.attendance.findMany({
+        where: {
+          date: {
+              gt: range.start,
+              lt: range.end,
+          },
+         },
       });
     }
     @Mutation(returns => Attendance)
