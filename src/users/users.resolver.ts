@@ -10,6 +10,7 @@ import {
 } from '@nestjs/graphql';
 import { ROLES, User } from './user';
 import { PrismaService } from 'src/prisma.service';
+import hashPassword from '../utils/hashPassword';
 
 @InputType()
 export class SingUpUserInput {
@@ -52,12 +53,13 @@ export class UsersResolver {
 
   @Mutation(returns => User)
   async signup(@Args('data') data: SingUpUserInput, @Context() ctx) {
+    const hashedPassword = await hashPassword(data.password);
     return this.prismaService.users.create({
       data: {
         email: data.email,
         lastName: data.lastName,
         firstName: data.lastName,
-        password: data.password,
+        password: hashedPassword,
         role: data.role,
       },
     });
