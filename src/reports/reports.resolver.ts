@@ -11,6 +11,7 @@ import {
   import {Report} from './dto/reports'
   import { PrismaService } from 'src/prisma.service';
   import {AuthenticationError, UserInputError} from 'apollo-server-express'
+import { DateRange } from 'src/attendance/inputs/date.input';
 
 @Resolver()
 export class ReportsResolver {
@@ -60,19 +61,14 @@ export class ReportsResolver {
       },
     })
   }
-  @Query(returns => [Report],{name: "getWeekReport"})
-  async report_week(@Args('date') report: Date, @Context() ctx){
+  @Query(returns => [Report],{name: "getTimeRangeReport"})
+  async report_month(@Args('date') report: DateRange, @Context() ctx){
     return this.prismaService.reports.findMany({
       where: {
-        date: report,
+        date: {
+          gt: report.start,
+          lt: report.end,
       },
-    })
-  }
-  @Query(returns => [Report],{name: "getMonthReport"})
-  async report_month(@Args('date') report: Date, @Context() ctx){
-    return this.prismaService.reports.findMany({
-      where: {
-        date: report,
       },
     })
   }
