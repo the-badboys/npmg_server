@@ -6,6 +6,8 @@ import { FamiliesModule } from './families/families.module';
 import { ReportsModule } from './reports/reports.module';
 import { NamersModule } from './namers/namers.module';
 import { CeremonyModule } from './ceremony/ceremony.module';
+import { TasksModule } from './tasks/tasks.module';
+import { AttendanceModule } from './attendance/attendance.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { CeremonyModule } from './ceremony/ceremony.module';
     ReportsModule,
     NamersModule,
     CeremonyModule,
+    TasksModule,
+    AttendanceModule,
   ],
   controllers: [],
   providers: [],
