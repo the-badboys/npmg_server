@@ -87,6 +87,7 @@ model tasks{
   group String
   family String
   date DateTime?
+  added_by String
   isCompleted Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
