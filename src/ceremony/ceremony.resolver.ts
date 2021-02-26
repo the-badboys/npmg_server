@@ -55,11 +55,7 @@ export class CeremonyResolver {
 
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
   async getAllCeremonies() {
-    const ceremonies = this.prismaService.ceremonies.findMany({
-      include: {
-        babies: true,
-      },
-    });
+    const ceremonies = this.prismaService.ceremonies.findMany();
     return ceremonies;
   }
 
@@ -68,9 +64,6 @@ export class CeremonyResolver {
     const ceremony = this.prismaService.ceremonies.findUnique({
       where: {
         id,
-      },
-      include: {
-        babies: true,
       },
     });
     return ceremony;
