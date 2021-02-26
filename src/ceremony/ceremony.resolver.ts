@@ -7,7 +7,6 @@ import {
   Query,
   Resolver,
 } from '@nestjs/graphql';
-import { IsEmpty, isNotEmpty } from 'class-validator';
 import { PrismaService } from 'src/prisma.service';
 import { Ceremony } from './ceremony';
 
@@ -20,7 +19,7 @@ export class CeremonyInputType {
   description: string;
 
   @Field()
-  babies: number;
+  babies: string;
 
   @Field()
   ceremony_date: Date;
@@ -41,7 +40,7 @@ export class CeremonyUpdateInputType {
   description: string;
 
   @Field()
-  babies: number;
+  babies: string;
 
   @Field()
   ceremony_date: Date;
@@ -56,7 +55,11 @@ export class CeremonyResolver {
 
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
   async getAllCeremonies() {
-    const ceremonies = this.prismaService.ceremonies.findMany();
+    const ceremonies = this.prismaService.ceremonies.findMany({
+      include: {
+        babies: true,
+      },
+    });
     return ceremonies;
   }
 
@@ -66,6 +69,9 @@ export class CeremonyResolver {
       where: {
         id,
       },
+      include: {
+        babies: true,
+      },
     });
     return ceremony;
   }
@@ -74,7 +80,9 @@ export class CeremonyResolver {
   async addCeremony(@Args('data') dataArgs: CeremonyInputType) {
     const ceremony = this.prismaService.ceremonies.create({
       data: {
-        babies: dataArgs.babies,
+        // babies: {
+        //   create: { id: dataArgs.babies },
+        // },
         venue: dataArgs.venue,
         title: dataArgs.title,
         description: dataArgs.description,
@@ -101,7 +109,7 @@ export class CeremonyResolver {
         id: data.id,
       },
       data: {
-        babies: data.babies,
+        // babies: data.babies,
         ceremony_date: data.ceremony_date,
         venue: data.venue,
         title: data.title,
