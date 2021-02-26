@@ -11,68 +11,85 @@ generator client {
 }
 
 model users {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String    @id @default(uuid())
+  email     String    @unique
   firstName String
   lastName  String
   role      Role
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  reports   reports[]
 }
 
-model npmg{
-  id String @id @default(uuid())
-  name String @unique
-  mother String
-  father String
-  family String
-  gender String @default("male")
-  dob String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  isSilverBacked Boolean @default(false)
-  families     families   @relation(fields: [family], references: [id])
+model npmg {
+  id             String    @id @default(uuid())
+  name           String    @unique
+  mother         String
+  father         String
+  family         String
+  gender         String    @default("male")
+  dob            String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
+  isSilverBacked Boolean   @default(false)
+  families       families  @relation(fields: [family], references: [id])
+  namers         namers[]
+  reports        reports[]
 }
 
-model families{
-  id String @id @default(uuid())
-  family_name String   @unique
-  leader String @unique
+model families {
+  id          String @id @default(uuid())
+  family_name String @unique
+  leader      String @unique
+  npmg        npmg[]
+}
 
+model namers {
+  id          String   @id @default(uuid())
+  fullname    String?
+  gorilla     String
+  year        Int      @default(2021)
+  comment     String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  npmg        npmg     @relation(fields: [gorilla], references: [id])
 }
-model namers{
-  id String @id @default(uuid())
-  fullname String?
-  gorilla String
-  year Int @default(2021)
-  comment String
-  isCompleted Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  npmg   npmg   @relation(fields: [gorilla], references: [id])
+
+model reports {
+  id        String       @id @default(uuid())
+  gorilla   String
+  date      DateTime     @default(now())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now())
+  reporter  String
+  lungs     reportStatus @default(NSA)
+  heart     reportStatus @default(NSA)
+  legs      reportStatus @default(NSA)
+  head      reportStatus @default(NSA)
+  eyes      reportStatus @default(NSA)
+  stomach   reportStatus @default(NSA)
+  users     users        @relation(fields: [reporter], references: [id])
+  npmg      npmg         @relation(fields: [gorilla], references: [id])
 }
-model reports{
-  id String @id @default(uuid())
-  gorilla String
-  date   DateTime @default(now())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  reporter String
-  lungs reportStatus @default(NSA)
-  heart reportStatus @default(NSA)
-  legs reportStatus @default(NSA)
-  head reportStatus @default(NSA)
-  eyes reportStatus @default(NSA)
-  stomach reportStatus @default(NSA)
-  users     users   @relation(fields: [reporter], references: [id])
-  npmg     npmg   @relation(fields: [gorilla], references: [id])
+
+model ceremonies {
+  id            String   @id @default(uuid())
+  ceremony_date DateTime
+  created_at    DateTime @default(now())
+  babies        Int
+  venue         String
+  title         String
+  description   String
 }
+
 enum Role {
   USER
   ADMIN
   RANGER
   DOCTOR
 }
+
 enum reportStatus {
   NSA
   ASN
