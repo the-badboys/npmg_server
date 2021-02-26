@@ -10,6 +10,10 @@ export class Task {
     added_by: string;
     @Field(type => Date)
     date: Date;
+    @Field(type => Date)
+    createdAt: Date;
+    @Field(type => Date)
+    updatedAt: Date;
     @Field(type =>ID)
     family: string;
 
