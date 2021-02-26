@@ -87,26 +87,44 @@ model ceremonies {
   npmg          npmg[]
 }
 
-model babies {
-  id String @id @default(uuid())
+model tasks {
+  id          String    @id @default(uuid())
+  group       String
+  family      String
+  date        DateTime?
+  added_by    String
+  isCompleted Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
 }
-model tasks{
-  id String @id @default(uuid())
-  group String
-  family String
-  date DateTime?
-  added_by String
-  isCompleted Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
+
 model attendance {
-  id String @id @default(uuid())
+  id        String    @id @default(uuid())
   attendant String
-  added_by String
+  added_by  String
   isPresent Boolean   @default(true)
-  date DateTime?
+  date      DateTime?
 }
+
+model notifications {
+  id          String         @id @default(uuid())
+  type        NotifationType
+  createdAt   DateTime       @default(now())
+  isRead      Boolean        @default(false)
+  updatedAt   DateTime       @default(now())
+  title       String
+  description String
+  emailTo     String
+}
+
+enum NotifationType {
+  REPORT_CHECKED
+  ACCOUNT_UPDATED
+  VERIFY_ACCOUNT
+  NEW_GORRILLA
+  ERROR
+}
+
 enum Role {
   USER
   ADMIN
