@@ -8,7 +8,7 @@ import { jwtConstants } from 'src/utils/jwtSetup';
   imports: [
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '24h' },
     }),
   ],
   providers: [UsersResolver, PrismaService],

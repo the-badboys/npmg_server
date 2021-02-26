@@ -99,7 +99,7 @@ export class UsersResolver {
   @Query(returns => User, { nullable: true, name: 'me' })
   @UseGuards(UserGuard)
   async getLoggedIn(@Context() ctx) {
-    console.log(ctx);
+    return ctx.user;
   }
 
   @Mutation(returns => User)
