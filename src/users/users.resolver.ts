@@ -1,4 +1,9 @@
-import { Inject, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -70,7 +75,7 @@ export class UsersResolver {
     });
 
     if (!findUser) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid email or password');
     }
 
     let doPasswordsMatch = await validatePassword(
@@ -79,7 +84,7 @@ export class UsersResolver {
     );
 
     if (!doPasswordsMatch) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid email or password');
     }
 
     let token = this.jwtService.sign(findUser);
