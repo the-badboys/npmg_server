@@ -33,7 +33,7 @@ export class NamersResolver {
   }
   @Mutation(returns => [Namer])
   async addNewNamer(@Args('data') data: NewNamer, @Context() ctx) {
-    const npmg = await this.prismaService.users.findUnique({
+    const npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.gorilla },
     });
     if(!npmg){
@@ -51,7 +51,7 @@ export class NamersResolver {
   }
   @Mutation(returns => Namer, { nullable: true, name: 'updateNamer' })
   async updatenamer(@Args('update') namer: UpdateNamer, @Context() ctx) {
-    const npmg = await this.prismaService.users.findUnique({
+    const npmg = await this.prismaService.npmg.findUnique({
       where: { id:namer.data.gorilla },
     });
     if(!npmg){

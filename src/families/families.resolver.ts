@@ -28,7 +28,7 @@ export class FamiliesResolver {
   }
   @Mutation(returns => Family, { nullable: true, name: 'updateFamily' })
   async updatefamily(@Args('update') family: UpdateFamily, @Context() ctx) {
-    const npmg = await this.prismaService.users.findUnique({
+    const npmg = await this.prismaService.npmg.findUnique({
       where: { id:family.data.leader },
     });
     if(!npmg){
@@ -47,7 +47,7 @@ export class FamiliesResolver {
 
   @Mutation(returns => Family)
   async addNewFamily(@Args('data') data: NewFamily, @Context() ctx) {
-    const npmg = await this.prismaService.users.findUnique({
+    const npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.leader },
     });
     if(!npmg){
