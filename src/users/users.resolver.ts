@@ -1,10 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { Inject, UnauthorizedException, UseGuards } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -20,10 +14,12 @@ import { PrismaService } from 'src/prisma.service';
 import { hash, validatePassword } from '../utils/hashPassword';
 import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from './user.guard';
+import { IsEmail } from 'class-validator';
 
 @InputType()
 export class SingUpUserInput {
   @Field()
+  @IsEmail()
   email: string;
 
   @Field()
@@ -93,8 +89,6 @@ export class UsersResolver {
 
     return { token };
   }
-
-  //TODO: Get currently loggedin user
 
   @Query(returns => User, { nullable: true, name: 'me' })
   @UseGuards(UserGuard)
