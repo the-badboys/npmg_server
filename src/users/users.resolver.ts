@@ -3,6 +3,7 @@ import {
   HttpStatus,
   Inject,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import {
   Resolver,
@@ -18,6 +19,7 @@ import { ROLES, User } from './user';
 import { PrismaService } from 'src/prisma.service';
 import { hash, validatePassword } from '../utils/hashPassword';
 import { JwtService } from '@nestjs/jwt';
+import { UserGuard } from './user.guard';
 
 @InputType()
 export class SingUpUserInput {
@@ -93,7 +95,9 @@ export class UsersResolver {
   }
 
   //TODO: Get currently loggedin user
+
   @Query(returns => User, { nullable: true, name: 'me' })
+  @UseGuards(UserGuard)
   async getLoggedIn(@Context() ctx) {
     console.log(ctx);
   }
