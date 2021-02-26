@@ -61,7 +61,6 @@ export class UsersResolver {
     });
   }
 
-  //TODO: Handle login of the users
   @Mutation(returns => LoginResponse, { name: 'login' })
   async loginUser(@Args('data') data: LoginUserInput, @Context() ctx) {
     const findUser = await this.prismaService.users.findUnique({
@@ -70,13 +69,16 @@ export class UsersResolver {
       },
     });
 
-    console.log(findUser);
-
     if (!findUser) {
       throw new UnauthorizedException();
     }
 
-    if (!validatePassword(data.password, findUser.password)) {
+    let doPasswordsMatch = await validatePassword(
+      data.password,
+      findUser.password,
+    );
+
+    if (!doPasswordsMatch) {
       throw new UnauthorizedException();
     }
 
