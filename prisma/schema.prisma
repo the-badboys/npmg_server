@@ -22,19 +22,21 @@ model users {
 }
 
 model npmg {
-  id             String    @id @default(uuid())
-  name           String    @unique
+  id             String      @id @default(uuid())
+  name           String      @unique
   mother         String
   father         String
   family         String
-  gender         String    @default("male")
+  gender         String      @default("male")
   dob            String
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now())
-  isSilverBacked Boolean   @default(false)
-  families       families  @relation(fields: [family], references: [id])
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @default(now())
+  isSilverBacked Boolean     @default(false)
+  families       families    @relation(fields: [family], references: [id])
   namers         namers[]
   reports        reports[]
+  ceremonies     ceremonies? @relation(fields: [ceremoniesId], references: [id])
+  ceremoniesId   String?
 }
 
 model families {
@@ -77,10 +79,16 @@ model ceremonies {
   id            String   @id @default(uuid())
   ceremony_date DateTime
   created_at    DateTime @default(now())
-  babies        Int
+  // babies        npmg[]   @relation(fields: [babyId], references: [id])
   venue         String
   title         String
   description   String
+  babyId        String
+  npmg          npmg[]
+}
+
+model babies {
+  id String @id @default(uuid())
 }
 model tasks{
   id String @id @default(uuid())
