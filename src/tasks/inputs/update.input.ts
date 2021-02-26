@@ -7,7 +7,7 @@ import {
   import { NewTask} from './create.input'
 
   @InputType()
-export class  UpdateNpmg {
+export class  UpdateTask {
   @Field(()=>NewTask,{nullable: true})
   data: NewTask;
 

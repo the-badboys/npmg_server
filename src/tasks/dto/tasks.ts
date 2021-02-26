@@ -16,5 +16,7 @@ export class Task {
     updatedAt: Date;
     @Field(type =>ID)
     family: string;
+    @Field(type =>Boolean)
+    isCompleted: boolean
 
 }
