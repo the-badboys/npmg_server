@@ -82,7 +82,21 @@ model ceremonies {
   title         String
   description   String
 }
-
+model tasks{
+  id String @id @default(uuid())
+  group String
+  family String
+  date DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+model attendance {
+  id String @id @default(uuid())
+  attendant String
+  added_by String
+  isPresent Boolean   @default(true)
+  date DateTime?
+}
 enum Role {
   USER
   ADMIN
