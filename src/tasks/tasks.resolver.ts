@@ -57,6 +57,12 @@ export class TasksResolver {
     }
     @Mutation(returns => Task, { nullable: true, name: 'deleteAttendance' })
   async delete(@Args('id') id: string, @Context() ctx) {
+    const npmg = await this.prismaService.tasks.findUnique({
+      where: { id },
+    });
+    if(!npmg){
+      return new UserInputError("Task to be deleted not found")
+    }
     return this.prismaService.tasks.delete({
       where: { id },
     });

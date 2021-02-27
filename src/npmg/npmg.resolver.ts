@@ -31,7 +31,6 @@ export class NpmgResolver {
     const m_npmg = await this.prismaService.npmg.findUnique({
       where: { id:npmg.data.mother },
     });
-    console.log(m_npmg)
     if(!m_npmg){
       return new UserInputError("Mother not found")
     }
@@ -64,6 +63,12 @@ export class NpmgResolver {
   }
   @Mutation(returns => Npmg)
   async newNpmg(@Args('data') data: NewNpmg, @Context() ctx) {
+    const nametaken = await this.prismaService.npmg.findUnique({
+      where: { name:data.name },
+    });
+    if(nametaken){
+      return new UserInputError("Gorilla name taken")
+    }
     const m_npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.mother },
     });
@@ -96,6 +101,12 @@ export class NpmgResolver {
   }
   @Mutation(returns => Npmg, { nullable: true, name: 'deleteNpmg' })
   async delete(@Args('id') id: string, @Context() ctx) {
+    const npmg = await this.prismaService.npmg.findUnique({
+      where: { id },
+    });
+    if(!npmg){
+      return new UserInputError("Gorilla to be deleted not found")
+    }
     return this.prismaService.npmg.delete({
       where: { id },
     });
