@@ -114,6 +114,7 @@ model notifications {
   title      String
   message    String
   emailTo    String
+  notifierId String
 }
 
 enum NotifationType {
