@@ -20,7 +20,7 @@ export class CeremonyInputType {
   description: string;
 
   @Field()
-  babies: string;
+  babyId: string;
 
   @Field()
   ceremony_date: Date;
@@ -44,6 +44,9 @@ export class CeremonyUpdateInputType {
   babies: string;
 
   @Field()
+  babyId: string;
+
+  @Field()
   ceremony_date: Date;
 
   @Field()
@@ -57,7 +60,10 @@ export class CeremonyResolver {
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
   @UseGuards(UserGuard)
   async getAllCeremonies() {
-    const ceremonies = this.prismaService.ceremonies.findMany();
+    const ceremonies = this.prismaService.ceremonies.findMany({
+      skip: 40,
+      take: 10,
+    });
     return ceremonies;
   }
 
@@ -77,10 +83,8 @@ export class CeremonyResolver {
   async addCeremony(@Args('data') dataArgs: CeremonyInputType) {
     const ceremony = this.prismaService.ceremonies.create({
       data: {
-        // babies:{
-
-        // }
-        babyId: dataArgs.babies,
+        // babies: dataArgs.babies,
+        babyId: dataArgs.babyId,
         venue: dataArgs.venue,
         title: dataArgs.title,
         description: dataArgs.description,
