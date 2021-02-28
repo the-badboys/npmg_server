@@ -8,8 +8,6 @@ import { NamersModule } from './namers/namers.module';
 import { CeremonyModule } from './ceremony/ceremony.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AttendanceModule } from './attendance/attendance.module';
-import { APP_FILTER } from '@nestjs/core';
-import { HttpErrorFilter } from './shared/http-error.filter';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 
 @Module({
@@ -48,7 +46,16 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 
           return graphQLFormattedError;
         } else {
-          return error.extensions?.exception?.response || error.message;
+          if (error.extensions.exception.name === 'JsonWebTokenError') {
+            const graphQLFormattedError = {
+              status: 404,
+              message: 'Invalid token',
+              error: 'Unauthorized',
+            };
+            return graphQLFormattedError;
+          } else {
+            return error.extensions?.exception?.response || error.message;
+          }
         }
       },
     }),
@@ -62,11 +69,6 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
     AttendanceModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_FILTER,
-      useClass: HttpErrorFilter,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}
