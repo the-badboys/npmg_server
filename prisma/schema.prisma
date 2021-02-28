@@ -84,7 +84,6 @@ model ceremonies {
   title         String
   description   String
   babyId        String
-  // npmg          npmg[]   @relation(fields: [babies], references: [id])
 }
 
 model tasks {
@@ -107,14 +106,14 @@ model attendance {
 }
 
 model notifications {
-  id          String         @id @default(uuid())
-  type        NotifationType
-  createdAt   DateTime       @default(now())
-  isRead      Boolean        @default(false)
-  updatedAt   DateTime       @default(now())
-  title       String
-  description String
-  emailTo     String
+  id         String         @id @default(uuid())
+  createdAt  DateTime       @default(now())
+  isRead     Boolean        @default(false)
+  updatedAt  DateTime       @default(now())
+  event_type NotifationType
+  title      String
+  message    String
+  emailTo    String
 }
 
 enum NotifationType {
