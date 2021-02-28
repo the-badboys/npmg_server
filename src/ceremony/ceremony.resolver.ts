@@ -77,9 +77,10 @@ export class CeremonyResolver {
   async addCeremony(@Args('data') dataArgs: CeremonyInputType) {
     const ceremony = this.prismaService.ceremonies.create({
       data: {
-        // babies: {
-        //   create: { id: dataArgs.babies },
-        // },
+        // babies:{
+
+        // }
+        babyId: dataArgs.babies,
         venue: dataArgs.venue,
         title: dataArgs.title,
         description: dataArgs.description,

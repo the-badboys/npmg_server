@@ -79,12 +79,12 @@ model ceremonies {
   id            String   @id @default(uuid())
   ceremony_date DateTime
   created_at    DateTime @default(now())
-  // babies        npmg[]   @relation(fields: [babyId], references: [id])
+  babies        npmg[]
   venue         String
   title         String
   description   String
-  // babyId        String
-  npmg          npmg[]
+  babyId        String
+  // npmg          npmg[]   @relation(fields: [babies], references: [id])
 }
 
 model tasks {
