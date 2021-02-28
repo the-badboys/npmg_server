@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import {
   Args,
   Field,
@@ -8,6 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
+import { UserGuard } from 'src/users/user.guard';
 import { Ceremony } from './ceremony';
 
 @InputType()
@@ -54,12 +55,14 @@ export class CeremonyResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
+  @UseGuards(UserGuard)
   async getAllCeremonies() {
     const ceremonies = this.prismaService.ceremonies.findMany();
     return ceremonies;
   }
 
   @Query(() => Ceremony, { nullable: true, name: 'getCeremony' })
+  @UseGuards(UserGuard)
   async getCeremony(@Args('id') id: string) {
     const ceremony = this.prismaService.ceremonies.findUnique({
       where: {
@@ -70,6 +73,7 @@ export class CeremonyResolver {
   }
 
   @Mutation(() => Ceremony, { name: 'createCeremony' })
+  @UseGuards(UserGuard)
   async addCeremony(@Args('data') dataArgs: CeremonyInputType) {
     const ceremony = this.prismaService.ceremonies.create({
       data: {
@@ -86,6 +90,7 @@ export class CeremonyResolver {
   }
 
   @Mutation(() => Ceremony, { name: 'deleteCeremony' })
+  @UseGuards(UserGuard)
   async deleteCeremony(@Args('id') id: string) {
     const deletedRecord = this.prismaService.ceremonies.delete({
       where: {
@@ -96,6 +101,7 @@ export class CeremonyResolver {
   }
 
   @Mutation(() => Ceremony, { name: 'updateCeremony' })
+  @UseGuards(UserGuard)
   async updateCeremony(@Args('data') data: CeremonyUpdateInputType) {
     const ceremony = this.prismaService.ceremonies.update({
       where: {

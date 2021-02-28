@@ -9,9 +9,15 @@ import { CeremonyModule } from './ceremony/ceremony.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './utils/jwtSetup';
 
 @Module({
   imports: [
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '24h' },
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       formatError: (error: GraphQLError) => {
