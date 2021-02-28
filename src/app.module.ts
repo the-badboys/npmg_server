@@ -14,8 +14,6 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      // formatError: (error: GraphQLError) =>
-      //   error.extensions?.exception?.response || error.message,
       formatError: (error: GraphQLError) => {
         if (error.message === 'VALIDATION_ERROR') {
           const extensions = {
@@ -53,6 +51,14 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
               error: 'Unauthorized',
             };
             return graphQLFormattedError;
+          } else if (error.extensions.exception.code === 'P2002') {
+            const field = error.extensions.exception.meta.target[0];
+            const graphQLFormattedError = {
+              status: 404,
+              message: 'Invalid Data',
+              error: `${field} Already exists`,
+            };
+            return graphQLFormattedError;
           } else {
             return error.extensions?.exception?.response || error.message;
           }
@@ -72,3 +78,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
   providers: [],
 })
 export class AppModule {}
+
+//TODO: (Verite) I shall use this one to update error handling mechanism we are using
+// formatError: (error: GraphQLError) =>
+//   error.extensions?.exception?.response || error.message,
