@@ -14,7 +14,7 @@ import { PrismaService } from 'src/prisma.service';
 import { hash, validatePassword } from '../utils/hashPassword';
 import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from './user.guard';
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class SingUpUserInput {
@@ -38,9 +38,11 @@ export class SingUpUserInput {
 @InputType()
 export class LoginUserInput {
   @Field()
+  @IsNotEmpty()
   email: string;
 
   @Field()
+  @IsNotEmpty()
   password: string;
 }
 
