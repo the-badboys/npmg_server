@@ -47,6 +47,18 @@ export class FamiliesResolver {
 
   @Mutation(returns => Family)
   async addNewFamily(@Args('data') data: NewFamily, @Context() ctx) {
+    const fam_exists = await this.prismaService.families.findUnique({
+      where: { family_name: data.family_name },
+    });
+    if(fam_exists){
+      return new UserInputError("Family name taken")
+    }
+    const leader_exists = await this.prismaService.families.findUnique({
+      where: { leader: data.leader },
+    });
+    if(leader_exists){
+      return new UserInputError("Leader can not lead more than one family")
+    }
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.leader },
     });
@@ -63,6 +75,12 @@ export class FamiliesResolver {
   }
   @Mutation(returns => Family, { nullable: true, name: 'deleteFamily' })
   async delete(@Args('id') id: string, @Context() ctx) {
+    const npmg = await this.prismaService.families.findUnique({
+      where: { id },
+    });
+    if(!npmg){
+      return new UserInputError("Family to be deleted not found")
+    }
     return this.prismaService.families.delete({
       where: { id },
     });

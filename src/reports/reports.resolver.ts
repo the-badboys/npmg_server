@@ -104,6 +104,12 @@ export class ReportsResolver {
   }
   @Mutation(returns => Report, { nullable: true, name: 'deleteReport' })
   async delete(@Args('id') id: string, @Context() ctx) {
+    const npmg = await this.prismaService.reports.findUnique({
+      where: { id },
+    });
+    if(!npmg){
+      return new UserInputError("Report to be deleted not found")
+    }
     return this.prismaService.reports.delete({
       where: { id },
     });

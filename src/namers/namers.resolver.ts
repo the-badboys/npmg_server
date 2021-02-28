@@ -73,6 +73,12 @@ export class NamersResolver {
 
   @Mutation(returns => Namer, { nullable: true, name: 'deleteNamer' })
   async delete(@Args('id') id: string, @Context() ctx) {
+    const npmg = await this.prismaService.namers.findUnique({
+      where: { id },
+    });
+    if(!npmg){
+      return new UserInputError("Namer to be deleted not found")
+    }
     return this.prismaService.namers.delete({
       where: { id },
     });
