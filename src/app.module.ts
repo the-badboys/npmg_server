@@ -22,6 +22,9 @@ import { jwtConstants } from './utils/jwtSetup';
       autoSchemaFile: true,
       playground: true,
       introspection: true,
+
+      //TODO: (verite:) Error formatting cleanup
+
       // formatError: (error: GraphQLError) => {
       //   if (error.message === 'VALIDATION_ERROR') {
       //     const extensions = {
