@@ -11,6 +11,7 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './utils/jwtSetup';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { jwtConstants } from './utils/jwtSetup';
     CeremonyModule,
     TasksModule,
     AttendanceModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [],

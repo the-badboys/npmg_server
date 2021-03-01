@@ -1,6 +1,7 @@
-import { Field, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { User } from 'src/users/user';
 
+@ObjectType()
 export class Notification {
   @Field()
   id: string;
@@ -14,7 +15,7 @@ export class Notification {
   @Field()
   updatedAt: Date;
 
-  @Field()
+  @Field(type => NotificationType)
   notificationType: NotificationType;
 
   @Field()
