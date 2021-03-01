@@ -7,6 +7,8 @@ import {
   Args,
   ObjectType,
   Field,
+  Context,
+  InputType,
 } from '@nestjs/graphql';
 import { PubSub } from 'apollo-server-express';
 import { PrismaService } from 'src/prisma.service';
@@ -14,7 +16,7 @@ import { Notification, NotificationType } from './notification';
 
 const pubSub = new PubSub();
 
-@ObjectType()
+@InputType()
 class NotificationInput {
   @Field()
   title: string;
@@ -44,20 +46,21 @@ export class NotificationResolver {
     return this.prismaService.notifications.findMany();
   }
 
-  // @Mutation(returns => Notification, { name: 'createNewNotification' })
-  // async AddNotification(@Args('data') data: NotificationInput) {
-  //   const notification = await this.prismaService.notifications.create({
-  //     data: {
-  //       title: data.title,
-  //       message: data.message,
-  //       notication_type: data.event_type,
-  //       userId: data.notifierId,
-  //       emailTo: data.emailTo,
-  //     },
-  //   });
-  //   pubSub.publish('notificationAdded', notification);
-  //   return notification;
-  // }
+  @Mutation(returns => Notification, { name: 'createNewNotification' })
+  async AddNotification(@Args('data') data: NotificationInput, @Context() ctx) {
+    console.log(data);
+    //   const notification = await this.prismaService.notifications.create({
+    //     data: {
+    //       title: data.title,
+    //       message: data.message,
+    //       notication_type: data.event_type,
+    //       userId: data.notifierId,
+    //       emailTo: data.emailTo,
+    //     },
+    //   });
+    //   pubSub.publish('notificationAdded', notification);
+    //   return notification;
+  }
 
   @Subscription(returns => Notification)
   newNotification() {
