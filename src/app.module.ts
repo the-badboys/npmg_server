@@ -8,7 +8,6 @@ import { NamersModule } from './namers/namers.module';
 import { CeremonyModule } from './ceremony/ceremony.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AttendanceModule } from './attendance/attendance.module';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './utils/jwtSetup';
 import { NotificationModule } from './notification/notification.module';

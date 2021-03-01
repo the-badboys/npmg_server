@@ -5,14 +5,13 @@ import {
   Subscription,
   Mutation,
   Args,
-  ObjectType,
   Field,
   Context,
   InputType,
 } from '@nestjs/graphql';
 import { PubSub } from 'apollo-server-express';
 import { PrismaService } from 'src/prisma.service';
-import { Notification, NotificationType } from './notification';
+import { Notification, NotificationTypes } from './notification';
 
 const pubSub = new PubSub();
 
@@ -25,16 +24,16 @@ class NotificationInput {
   message: string;
 
   @Field()
-  notifierId: string;
+  userId: string;
 
-  @Field(type => NotificationType)
-  event_type: NotificationType;
-
-  @Field()
+  @Field({ nullable: true })
   isRead: boolean;
 
   @Field()
   emailTo: string;
+
+  @Field(type => NotificationTypes)
+  notification_type: NotificationTypes;
 }
 
 @Resolver(Notification)
@@ -48,18 +47,17 @@ export class NotificationResolver {
 
   @Mutation(returns => Notification, { name: 'createNewNotification' })
   async AddNotification(@Args('data') data: NotificationInput, @Context() ctx) {
-    console.log(data);
-    //   const notification = await this.prismaService.notifications.create({
-    //     data: {
-    //       title: data.title,
-    //       message: data.message,
-    //       notication_type: data.event_type,
-    //       userId: data.notifierId,
-    //       emailTo: data.emailTo,
-    //     },
-    //   });
-    //   pubSub.publish('notificationAdded', notification);
-    //   return notification;
+    const notification = await this.prismaService.notifications.create({
+      data: {
+        title: data.title,
+        message: data.message,
+        notification_type: data.notification_type,
+        userId: data.userId,
+        emailTo: data.emailTo,
+      },
+    });
+    pubSub.publish('notificationAdded', notification);
+    return notification;
   }
 
   @Subscription(returns => Notification)

@@ -106,16 +106,16 @@ model attendance {
 }
 
 model notifications {
-  id              String           @id @default(uuid())
-  createdAt       DateTime         @default(now())
-  isRead          Boolean          @default(false)
-  updatedAt       DateTime         @default(now())
-  notication_type NotificationType
-  title           String
-  message         String
-  emailTo         String
-  notifierId      users            @relation("OneToNotified", fields: [userId], references: [id])
-  userId          String
+  id                String           @id @default(uuid())
+  createdAt         DateTime         @default(now())
+  isRead            Boolean          @default(false)
+  updatedAt         DateTime         @default(now())
+  notification_type NotificationType
+  title             String
+  message           String
+  emailTo           String
+  notifierId        users            @relation("OneToNotified", fields: [userId], references: [id])
+  userId            String
 }
 
 enum NotificationType {

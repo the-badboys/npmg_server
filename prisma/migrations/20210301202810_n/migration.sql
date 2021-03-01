@@ -121,7 +121,7 @@ CREATE TABLE "notifications" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isRead" BOOLEAN NOT NULL DEFAULT false,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "notication_type" "NotificationType" NOT NULL,
+    "notification_type" "NotificationType" NOT NULL,
     "title" TEXT NOT NULL,
     "message" TEXT NOT NULL,
     "emailTo" TEXT NOT NULL,

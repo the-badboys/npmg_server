@@ -1,9 +1,9 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { User } from 'src/users/user';
 
 @ObjectType()
 export class Notification {
-  @Field()
+  @Field(type => ID)
   id: string;
 
   @Field()
@@ -15,9 +15,6 @@ export class Notification {
   @Field()
   updatedAt: Date;
 
-  @Field(type => NotificationType)
-  notificationType: NotificationType;
-
   @Field()
   title: string;
 
@@ -28,18 +25,21 @@ export class Notification {
   emailTo: string;
 
   @Field()
-  notifierId: User;
+  notifierId: string;
+
+  @Field(type => NotificationTypes)
+  notification_type: NotificationTypes;
 }
 
-export enum NotificationType {
+export enum NotificationTypes {
   REPORT_CHECKED = 'REPORT_CHECKED',
   ACCOUNT_UPDATED = 'ACCOUNT_UPDATED',
   VERIFY_ACCOUNT = 'VERIFY_ACCOUNT',
-  NEW_GORILLA = 'NEW_GORILLA',
+  NEW_GORRILLA = 'NEW_GORRILLA',
   ERROR = 'ERROR',
 }
 
-registerEnumType(NotificationType, {
-  name: 'NotificationType',
-  description: 'Role of users',
+registerEnumType(NotificationTypes, {
+  name: 'NotificationTypes',
+  description: 'Notification events',
 });
