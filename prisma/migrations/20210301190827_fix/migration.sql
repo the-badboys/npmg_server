@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "NotifationType" AS ENUM ('REPORT_CHECKED', 'ACCOUNT_UPDATED', 'VERIFY_ACCOUNT', 'NEW_GORRILLA', 'ERROR');
+CREATE TYPE "NotificationType" AS ENUM ('REPORT_CHECKED', 'ACCOUNT_UPDATED', 'VERIFY_ACCOUNT', 'NEW_GORRILLA', 'ERROR');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN', 'RANGER', 'DOCTOR');
@@ -32,7 +32,7 @@ CREATE TABLE "npmg" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isSilverBacked" BOOLEAN NOT NULL DEFAULT false,
-    "ceremoniesId" TEXT,
+    "ceremoniesId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -121,11 +121,11 @@ CREATE TABLE "notifications" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isRead" BOOLEAN NOT NULL DEFAULT false,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "event_type" "NotifationType" NOT NULL,
+    "notication_type" "NotificationType" NOT NULL DEFAULT E'ACCOUNT_UPDATED',
     "title" TEXT NOT NULL,
     "message" TEXT NOT NULL,
     "emailTo" TEXT NOT NULL,
-    "notifierId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -146,7 +146,7 @@ CREATE UNIQUE INDEX "families.leader_unique" ON "families"("leader");
 ALTER TABLE "npmg" ADD FOREIGN KEY ("family") REFERENCES "families"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremoniesId") REFERENCES "ceremonies"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremoniesId") REFERENCES "ceremonies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "namers" ADD FOREIGN KEY ("gorilla") REFERENCES "npmg"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -156,3 +156,6 @@ ALTER TABLE "reports" ADD FOREIGN KEY ("reporter") REFERENCES "users"("id") ON D
 
 -- AddForeignKey
 ALTER TABLE "reports" ADD FOREIGN KEY ("gorilla") REFERENCES "npmg"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "notifications" ADD FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
