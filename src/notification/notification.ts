@@ -32,11 +32,11 @@ export class Notification {
 }
 
 export enum NotificationType {
-  REPORT_CHECKED,
-  ACCOUNT_UPDATED,
-  VERIFY_ACCOUNT,
-  NEW_GORILLA,
-  ERROR,
+  REPORT_CHECKED = 'REPORT_CHECKED',
+  ACCOUNT_UPDATED = 'ACCOUNT_UPDATED',
+  VERIFY_ACCOUNT = 'VERIFY_ACCOUNT',
+  NEW_GORILLA = 'NEW_GORILLA',
+  ERROR = 'ERROR',
 }
 
 registerEnumType(NotificationType, {

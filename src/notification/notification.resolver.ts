@@ -1,7 +1,36 @@
 import { Inject } from '@nestjs/common';
-import { Resolver, Query } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Subscription,
+  Mutation,
+  Args,
+  ObjectType,
+  Field,
+} from '@nestjs/graphql';
+import { PubSub } from 'apollo-server-express';
 import { PrismaService } from 'src/prisma.service';
-import { Notification } from './notification';
+import { Notification, NotificationType } from './notification';
+
+const pubSub = new PubSub();
+
+@ObjectType()
+class NotificationInput {
+  @Field()
+  title: string;
+
+  @Field()
+  message: string;
+
+  @Field()
+  notifierId: string;
+
+  @Field(type => NotificationType)
+  event_type: NotificationType;
+
+  @Field()
+  isRead: boolean;
+}
 
 @Resolver(Notification)
 export class NotificationResolver {
@@ -10,5 +39,24 @@ export class NotificationResolver {
   @Query(returns => Notification, { name: 'getAllNotifications' })
   async getAllNotifications() {
     return this.prismaService.notifications.findMany();
+  }
+
+  @Mutation(returns => Notification, { name: 'createNewNotification' })
+  async AddNotification(@Args('data') data: NotificationInput) {
+    const notification = await this.prismaService.notifications.create({
+      data: {
+        title: data.title,
+        message: data.message,
+        event_type: data.event_type,
+        userId: data.notifierId,
+      },
+    });
+    pubSub.publish('notificationAdded', notification);
+    return notification;
+  }
+
+  @Subscription(returns => Notification)
+  newNotification() {
+    return pubSub.asyncIterator('notificationAdded');
   }
 }

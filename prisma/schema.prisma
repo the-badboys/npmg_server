@@ -114,8 +114,8 @@ model notifications {
   title      String
   message    String
   emailTo    String
-  notifierId users            @relation("OneToNotified", fields: [usersId], references: [id])
-  usersId    String
+  notifierId users            @relation("OneToNotified", fields: [userId], references: [id])
+  userId     String
 }
 
 enum NotificationType {
