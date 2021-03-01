@@ -21,6 +21,7 @@ import { jwtConstants } from './utils/jwtSetup';
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       playground: true,
+      introspection: true,
       //   formatError: (error: GraphQLError) => {
       //     if (error.message === 'VALIDATION_ERROR') {
       //       const extensions = {
