@@ -25,7 +25,7 @@ export class Notification {
   emailTo: string;
 
   @Field()
-  notifierId: string;
+  userId: string;
 
   @Field(type => NotificationTypes)
   notification_type: NotificationTypes;

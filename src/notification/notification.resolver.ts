@@ -10,6 +10,7 @@ import {
   InputType,
 } from '@nestjs/graphql';
 import { PubSub } from 'apollo-server-express';
+import { title } from 'process';
 import { PrismaService } from 'src/prisma.service';
 import { Notification, NotificationTypes } from './notification';
 
@@ -56,12 +57,12 @@ export class NotificationResolver {
         emailTo: data.emailTo,
       },
     });
-    pubSub.publish('notificationAdded', notification);
+    pubSub.publish('notificationAdded', { notificationAdded: notification });
     return notification;
   }
 
   @Subscription(returns => Notification)
-  newNotification() {
+  notificationAdded() {
     return pubSub.asyncIterator('notificationAdded');
   }
 }

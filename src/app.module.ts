@@ -22,6 +22,7 @@ import { NotificationModule } from './notification/notification.module';
       autoSchemaFile: true,
       playground: true,
       introspection: true,
+      installSubscriptionHandlers: true,
 
       //TODO: (verite:) Error formatting cleanup
 
