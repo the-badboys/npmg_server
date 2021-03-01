@@ -16,7 +16,7 @@ export class Ceremony {
   @Field(type => String)
   title: string;
 
-  @Field(type => Npmg)
+  @Field(type => [Npmg])
   babies: [npmg];
 
   @Field(type => String)

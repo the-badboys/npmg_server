@@ -11,14 +11,15 @@ generator client {
 }
 
 model users {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  firstName String
-  lastName  String
-  role      Role
-  password  String
-  createdAt DateTime  @default(now())
-  reports   reports[]
+  id            String          @id @default(uuid())
+  email         String          @unique
+  firstName     String
+  lastName      String
+  role          Role
+  password      String
+  createdAt     DateTime        @default(now())
+  reports       reports[]
+  notifications notifications[] @relation("OneToNotified")
 }
 
 model npmg {
@@ -105,18 +106,19 @@ model attendance {
 }
 
 model notifications {
-  id         String         @id @default(uuid())
-  createdAt  DateTime       @default(now())
-  isRead     Boolean        @default(false)
-  updatedAt  DateTime       @default(now())
-  event_type NotifationType
+  id         String           @id @default(uuid())
+  createdAt  DateTime         @default(now())
+  isRead     Boolean          @default(false)
+  updatedAt  DateTime         @default(now())
+  event_type NotificationType
   title      String
   message    String
   emailTo    String
-  notifierId String
+  notifierId users            @relation("OneToNotified", fields: [usersId], references: [id])
+  usersId    String
 }
 
-enum NotifationType {
+enum NotificationType {
   REPORT_CHECKED
   ACCOUNT_UPDATED
   VERIFY_ACCOUNT

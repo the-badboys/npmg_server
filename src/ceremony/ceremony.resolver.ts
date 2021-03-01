@@ -22,9 +22,6 @@ export class CeremonyInputType {
   description: string;
 
   @Field()
-  babyId: string;
-
-  @Field()
   ceremony_date: Date;
 
   @Field()
@@ -46,9 +43,6 @@ export class CeremonyUpdateInputType {
   babies: string;
 
   @Field()
-  babyId: string;
-
-  @Field()
   ceremony_date: Date;
 
   @Field()
@@ -61,7 +55,6 @@ export class CeremonyResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
-  // you can even pass more than one role just as variables
   @Roles(ROLES.USER)
   async getAllCeremonies() {
     const ceremonies = this.prismaService.ceremonies.findMany({
