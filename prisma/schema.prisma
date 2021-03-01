@@ -79,11 +79,10 @@ model ceremonies {
   id            String   @id @default(uuid())
   ceremony_date DateTime
   created_at    DateTime @default(now())
-  babies        npmg[]
   venue         String
   title         String
   description   String
-  babyId        String
+  npmg          npmg[]
 }
 
 model tasks {
