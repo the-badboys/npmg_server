@@ -30,6 +30,9 @@ class NotificationInput {
 
   @Field()
   isRead: boolean;
+
+  @Field()
+  emailTo: string;
 }
 
 @Resolver(Notification)
@@ -41,19 +44,20 @@ export class NotificationResolver {
     return this.prismaService.notifications.findMany();
   }
 
-  @Mutation(returns => Notification, { name: 'createNewNotification' })
-  async AddNotification(@Args('data') data: NotificationInput) {
-    const notification = await this.prismaService.notifications.create({
-      data: {
-        title: data.title,
-        message: data.message,
-        event_type: data.event_type,
-        userId: data.notifierId,
-      },
-    });
-    pubSub.publish('notificationAdded', notification);
-    return notification;
-  }
+  // @Mutation(returns => Notification, { name: 'createNewNotification' })
+  // async AddNotification(@Args('data') data: NotificationInput) {
+  //   const notification = await this.prismaService.notifications.create({
+  //     data: {
+  //       title: data.title,
+  //       message: data.message,
+  //       notication_type: data.event_type,
+  //       userId: data.notifierId,
+  //       emailTo: data.emailTo,
+  //     },
+  //   });
+  //   pubSub.publish('notificationAdded', notification);
+  //   return notification;
+  // }
 
   @Subscription(returns => Notification)
   newNotification() {

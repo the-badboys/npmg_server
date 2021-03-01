@@ -1,29 +1,28 @@
-import {
-    InputType,
-    Field,
-  } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class NewNpmg {
   @Field()
   name: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   mother: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   father: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   gender: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   dob: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   family: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   isSilverBacked: boolean;
 
+  @Field()
+  ceremonyId: string;
 }

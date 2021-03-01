@@ -32,7 +32,7 @@ CREATE TABLE "npmg" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isSilverBacked" BOOLEAN NOT NULL DEFAULT false,
-    "ceremoniesId" TEXT NOT NULL,
+    "ceremonyId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -95,7 +95,7 @@ CREATE TABLE "tasks" (
     "id" TEXT NOT NULL,
     "group" TEXT NOT NULL,
     "family" TEXT NOT NULL,
-    "date" TIMESTAMP(3),
+    "date" TIMESTAMP(3) NOT NULL,
     "added_by" TEXT NOT NULL,
     "isCompleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -110,7 +110,7 @@ CREATE TABLE "attendance" (
     "attendant" TEXT NOT NULL,
     "added_by" TEXT NOT NULL,
     "isPresent" BOOLEAN NOT NULL DEFAULT true,
-    "date" TIMESTAMP(3),
+    "date" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -121,7 +121,7 @@ CREATE TABLE "notifications" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isRead" BOOLEAN NOT NULL DEFAULT false,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "notication_type" "NotificationType" NOT NULL DEFAULT E'ACCOUNT_UPDATED',
+    "notication_type" "NotificationType" NOT NULL,
     "title" TEXT NOT NULL,
     "message" TEXT NOT NULL,
     "emailTo" TEXT NOT NULL,
@@ -146,7 +146,7 @@ CREATE UNIQUE INDEX "families.leader_unique" ON "families"("leader");
 ALTER TABLE "npmg" ADD FOREIGN KEY ("family") REFERENCES "families"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremoniesId") REFERENCES "ceremonies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremonyId") REFERENCES "ceremonies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "namers" ADD FOREIGN KEY ("gorilla") REFERENCES "npmg"("id") ON DELETE CASCADE ON UPDATE CASCADE;

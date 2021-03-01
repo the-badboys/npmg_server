@@ -59,6 +59,7 @@ export class NpmgResolver {
     const nametaken = await this.prismaService.npmg.findUnique({
       where: { name: data.name },
     });
+
     if (nametaken) {
       return new UserInputError('Gorilla name taken');
     }
@@ -82,6 +83,7 @@ export class NpmgResolver {
     }
     return this.prismaService.npmg.create({
       data: {
+        ceremonyId: data.ceremonyId,
         name: data.name,
         dob: data.dob,
         mother: data.mother,
@@ -92,6 +94,7 @@ export class NpmgResolver {
       },
     });
   }
+
   @Mutation(returns => Npmg, { nullable: true, name: 'deleteNpmg' })
   async delete(@Args('id') id: string, @Context() ctx) {
     const npmg = await this.prismaService.npmg.findUnique({
