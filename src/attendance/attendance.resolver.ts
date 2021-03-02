@@ -5,7 +5,7 @@ import {
     Mutation,
     Context,
   } from '@nestjs/graphql';
-  import { Inject } from '@nestjs/common';
+  import { Inject, UseGuards } from '@nestjs/common';
   import {NewAttendance} from './inputs/create.input'
   import {UpdateAttendance} from './inputs/update.input'
   import {Attendance} from './dto/attendance'
@@ -17,6 +17,7 @@ import { Roles } from 'src/users/roles.decorator';
 import { ROLES } from 'src/users/user';
 
 @Resolver(Attendance)
+@UseGuards(UserGuard)
 export class AttendanceResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
     @Query(returns => [Attendance], { nullable: true, name: 'getAllAttendances' })

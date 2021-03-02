@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { Namer } from './dto/namers';
 import {AuthenticationError, UserInputError} from 'apollo-server-express'
 import {
@@ -16,6 +16,7 @@ import { Roles } from 'src/users/roles.decorator';
 import { ROLES } from 'src/users/user';
 
 @Resolver(Namer)
+@UseGuards(UserGuard)
 export class NamersResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
     @Query(returns => [Namer], { nullable: true, name: 'getNamers' })

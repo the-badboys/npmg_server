@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation, Context } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
 import { Npmg } from './dto/npmg';
@@ -10,6 +10,7 @@ import { Roles } from 'src/users/roles.decorator';
 import { ROLES } from 'src/users/user';
 
 @Resolver(Npmg)
+@UseGuards(UserGuard)
 export class NpmgResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
   @Query(returns => [Npmg], { nullable: true, name: 'getAllNpmg' })

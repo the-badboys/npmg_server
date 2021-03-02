@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -16,6 +16,7 @@ import { Roles } from 'src/users/roles.decorator';
 import { ROLES } from 'src/users/user';
 
 @Resolver(Family)
+@UseGuards(UserGuard)
 export class FamiliesResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 

@@ -20,7 +20,7 @@ import { ROLES } from 'src/users/user';
 @UseGuards(UserGuard)
 export class ReportsResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
-    @Roles(ROLES.DOCTOR,ROLES.ADMIN,)
+    @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   @Query(returns => [Report], { nullable: true, name: 'getAllReports' })
   async allReports(@Context() ctx) {
     return this.prismaService.reports.findMany({});
