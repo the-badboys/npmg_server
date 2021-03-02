@@ -24,15 +24,16 @@ CREATE TABLE "users" (
 CREATE TABLE "npmg" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "mother" TEXT NOT NULL,
-    "father" TEXT NOT NULL,
-    "family" TEXT NOT NULL,
+    "mother" TEXT NOT NULL DEFAULT E'',
+    "father" TEXT NOT NULL DEFAULT E'',
+    "family" TEXT NOT NULL DEFAULT E'',
     "gender" TEXT NOT NULL DEFAULT E'male',
     "dob" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isSilverBacked" BOOLEAN NOT NULL DEFAULT false,
     "ceremonyId" TEXT NOT NULL,
+    "ceremoniesId" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -41,7 +42,7 @@ CREATE TABLE "npmg" (
 CREATE TABLE "families" (
     "id" TEXT NOT NULL,
     "family_name" TEXT NOT NULL,
-    "leader" TEXT NOT NULL,
+    "leader" TEXT NOT NULL DEFAULT E'',
 
     PRIMARY KEY ("id")
 );
@@ -51,7 +52,7 @@ CREATE TABLE "namers" (
     "id" TEXT NOT NULL,
     "fullname" TEXT,
     "gorilla" TEXT NOT NULL,
-    "year" INTEGER NOT NULL DEFAULT 2021,
+    "ceremonyId" TEXT NOT NULL,
     "comment" TEXT NOT NULL,
     "isCompleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -139,17 +140,14 @@ CREATE UNIQUE INDEX "npmg.name_unique" ON "npmg"("name");
 -- CreateIndex
 CREATE UNIQUE INDEX "families.family_name_unique" ON "families"("family_name");
 
--- CreateIndex
-CREATE UNIQUE INDEX "families.leader_unique" ON "families"("leader");
-
 -- AddForeignKey
-ALTER TABLE "npmg" ADD FOREIGN KEY ("family") REFERENCES "families"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremonyId") REFERENCES "ceremonies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "npmg" ADD FOREIGN KEY ("ceremoniesId") REFERENCES "ceremonies"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "namers" ADD FOREIGN KEY ("gorilla") REFERENCES "npmg"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "namers" ADD FOREIGN KEY ("ceremonyId") REFERENCES "ceremonies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reports" ADD FOREIGN KEY ("reporter") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

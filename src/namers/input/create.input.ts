@@ -7,7 +7,7 @@ export class NewNamer {
     @Field(type => String)
     fullname: string;
     @Field(type => String)
-    year: number;
+    ceremonyId: string;
     @Field(type => String)
     comment: string;
     @Field(type => ID)

@@ -26,3 +26,21 @@ export class NewNpmg {
   @Field()
   ceremonyId: string;
 }
+
+@InputType()
+export class NewNpmgNoRelation {
+  @Field()
+  name: string;
+
+  @Field({ nullable: true })
+  gender: string;
+
+  @Field({ nullable: true })
+  dob: string;
+
+  @Field({ nullable: true })
+  isSilverBacked: boolean;
+
+  @Field()
+  ceremonyId: string;
+}

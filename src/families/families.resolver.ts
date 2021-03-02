@@ -53,10 +53,10 @@ export class FamiliesResolver {
     if(fam_exists){
       return new UserInputError("Family name taken")
     }
-    const leader_exists = await this.prismaService.families.findUnique({
+    const leader_exists = await this.prismaService.families.findMany({
       where: { leader: data.leader },
     });
-    if(leader_exists){
+    if(leader_exists.length > 0){
       return new UserInputError("Leader can not lead more than one family")
     }
     const npmg = await this.prismaService.npmg.findUnique({

@@ -25,11 +25,11 @@ export class NamersResolver {
       where: { id },
     });
   }
-  @Query(returns => [Namer], { nullable: true, name: 'getYearNamers' })
-  async namersinYear(@Args('year') year: string, @Context() ctx) {
-    return this.prismaService.namers.findUnique({
-      where: { id: year },
-    });
+  @Query(returns => [Namer], { nullable: true, name: 'getCeremonyNamers' })
+  async namersinYear(@Args('id') id: string, @Context() ctx) {
+    return await this.prismaService.namers.findMany({
+      where: { ceremonyId: id },
+    })[0];
   }
   @Mutation(returns => [Namer])
   async addNewNamer(@Args('data') data: NewNamer, @Context() ctx) {
@@ -42,7 +42,7 @@ export class NamersResolver {
     return this.prismaService.namers.create({
       data: {
         gorilla: data.gorilla,
-        year: data.year,
+        ceremonyId: data.ceremonyId,
         fullname: data.fullname,
         isCompleted: data.isCompleted,
         comment: data.comment
@@ -63,7 +63,7 @@ export class NamersResolver {
       },
       data: {
         gorilla: namer.data.gorilla,
-        year: namer.data.year,
+        ceremonyId: namer.data.ceremonyId,
         fullname: namer.data.fullname,
         isCompleted: namer.data.isCompleted,
         comment: namer.data.comment

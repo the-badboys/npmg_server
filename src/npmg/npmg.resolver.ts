@@ -27,11 +27,17 @@ export class NpmgResolver {
     if (!m_npmg) {
       return new UserInputError('Mother not found');
     }
+    if(m_npmg.gender != "female"){
+      return new UserInputError('Mother not female');
+    }
     const f_npmg = await this.prismaService.npmg.findUnique({
       where: { id: npmg.data.father },
     });
     if (!f_npmg) {
       return new UserInputError('Father not found');
+    }
+    if(f_npmg.gender != "male"){
+      return new UserInputError('Father not male');
     }
     const family = await this.prismaService.families.findUnique({
       where: { id: npmg.data.family },
@@ -56,6 +62,7 @@ export class NpmgResolver {
   }
   @Mutation(returns => Npmg)
   async newNpmg(@Args('data') data: NewNpmg, @Context() ctx) {
+    console.log(data);
     const nametaken = await this.prismaService.npmg.findUnique({
       where: { name: data.name },
     });
@@ -63,36 +70,43 @@ export class NpmgResolver {
     if (nametaken) {
       return new UserInputError('Gorilla name taken');
     }
-    const m_npmg = await this.prismaService.npmg.findUnique({
-      where: { id: data.mother },
-    });
-    if (!m_npmg) {
-      return new UserInputError('Mother not found');
+    if(data.mother){
+      const m_npmg = await this.prismaService.npmg.findUnique({
+        where: { id: data.mother },
+      });
+      if (!m_npmg ) {
+        return new UserInputError('Mother not found');
+      }
     }
-    const f_npmg = await this.prismaService.npmg.findUnique({
-      where: { id: data.father },
-    });
-    if (!f_npmg) {
-      return new UserInputError('Father not found');
+    if(data.father){
+      const m_npmg = await this.prismaService.npmg.findUnique({
+        where: { id: data.father },
+      });
+      if (!m_npmg ) {
+        return new UserInputError('Father not found');
+      }
     }
-    const family = await this.prismaService.families.findUnique({
-      where: { id: data.family },
-    });
-    if (!family) {
-      return new UserInputError('Family not found');
+    if(data.family){
+      const m_npmg = await this.prismaService.families.findUnique({
+        where: { id: data.family },
+      });
+      if (!m_npmg ) {
+        return new UserInputError('Family not found');
+      }
     }
+    // if(data.family == ""){
+    //   data.family = null;
+    // }
+    // if(data.mother =""){
+    //   data.mother = null;
+    // }
+    // if(data.father =""){
+    //   data.father = null;
+    // }
     return this.prismaService.npmg.create({
-      data: {
-        ceremonyId: data.ceremonyId,
-        name: data.name,
-        dob: data.dob,
-        mother: data.mother,
-        father: data.father,
-        isSilverBacked: data.isSilverBacked,
-        family: data.family,
-        gender: data.gender,
-      },
+      data: data
     });
+    
   }
 
   @Mutation(returns => Npmg, { nullable: true, name: 'deleteNpmg' })
