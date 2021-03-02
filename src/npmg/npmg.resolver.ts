@@ -14,16 +14,19 @@ import { ROLES } from 'src/users/user';
 export class NpmgResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
   @Query(returns => [Npmg], { nullable: true, name: 'getAllNpmg' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async allNpmg(@Context() ctx) {
     return this.prismaService.npmg.findMany({});
   }
   @Query(returns => Npmg, { nullable: true, name: 'getNpmg' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async npmg(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.npmg.findUnique({
       where: { id },
     });
   }
   @Mutation(returns => Npmg, { nullable: true, name: 'updateNpmg' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async updatenpmg(@Args('update') npmg: UpdateNpmg, @Context() ctx) {
     const m_npmg = await this.prismaService.npmg.findUnique({
       where: { id: npmg.data.mother },
@@ -57,6 +60,7 @@ export class NpmgResolver {
     });
   }
   @Mutation(returns => Npmg)
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async newNpmg(@Args('data') data: NewNpmg, @Context() ctx) {
     const nametaken = await this.prismaService.npmg.findUnique({
       where: { name: data.name },
@@ -104,6 +108,7 @@ export class NpmgResolver {
   }
 
   @Mutation(returns => Npmg, { nullable: true, name: 'deleteNpmg' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async delete(@Args('id') id: string, @Context() ctx) {
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id },
