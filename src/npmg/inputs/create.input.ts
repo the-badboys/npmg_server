@@ -41,6 +41,6 @@ export class NewNpmgNoRelation {
   @Field({ nullable: true })
   isSilverBacked: boolean;
 
-  @Field()
+  @Field({ nullable: true})
   ceremonyId: string;
 }

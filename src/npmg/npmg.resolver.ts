@@ -62,7 +62,6 @@ export class NpmgResolver {
   }
   @Mutation(returns => Npmg)
   async newNpmg(@Args('data') data: NewNpmg, @Context() ctx) {
-    console.log(data);
     const nametaken = await this.prismaService.npmg.findUnique({
       where: { name: data.name },
     });
@@ -94,15 +93,14 @@ export class NpmgResolver {
         return new UserInputError('Family not found');
       }
     }
-    // if(data.family == ""){
-    //   data.family = null;
-    // }
-    // if(data.mother =""){
-    //   data.mother = null;
-    // }
-    // if(data.father =""){
-    //   data.father = null;
-    // }
+    const ceremony = await this.prismaService.ceremonies.findUnique({
+      where:{
+        id: data.ceremonyId
+      }
+    })
+    if(!ceremony){
+      return new UserInputError('Ceremony not found');
+    }
     return this.prismaService.npmg.create({
       data: data
     });
