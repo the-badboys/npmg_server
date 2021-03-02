@@ -41,16 +41,7 @@ export class ReportsResolver {
       return new UserInputError("Gorilla not found")
     }
     return this.prismaService.reports.create({
-      data: {
-        gorilla: data.gorilla,
-        date: data.date,
-        reporter: data.reporter,
-        lungs: data.lungs,
-        legs: data.legs,
-        head: data.head,
-        stomach: data.stomach,
-        eyes: data.eyes,
-      },
+      data: data
     });
   }
   @Query(returns => [Report],{name: "getDayReport"})
@@ -90,16 +81,7 @@ export class ReportsResolver {
       where: {
         id: report.report_id,
       },
-      data: {
-        gorilla: report.data.gorilla,
-        date: report.data.date,
-        reporter: report.data.reporter,
-        lungs: report.data.lungs,
-        legs: report.data.legs,
-        head: report.data.head,
-        stomach: report.data.stomach,
-        eyes: report.data.eyes,
-      },
+      data: report.data
     });
   }
   @Mutation(returns => Report, { nullable: true, name: 'deleteReport' })

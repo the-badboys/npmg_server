@@ -64,12 +64,7 @@ export class AttendanceResolver {
         return new UserInputError("Reporter not found")
       }
       return this.prismaService.attendance.create({
-        data: {
-          attendant: data.attendant,
-          added_by: data.added_by,
-          date: data.date,
-          isPresent: data.isPresent,
-        },
+        data: data
       });
     }
     @Mutation(returns => Attendance, { nullable: true, name: 'deleteAttendance' })

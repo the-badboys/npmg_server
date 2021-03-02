@@ -46,13 +46,7 @@ export class TasksResolver {
         return new UserInputError("Leader not found")
       }
       return this.prismaService.tasks.create({
-        data: {
-          group: data.group,
-          added_by: data.added_by,
-          family: data.family,
-          date: data.date,
-          isCompleted: data.isCompleted,
-        },
+        data: data
       });
     }
     @Mutation(returns => Task, { nullable: true, name: 'deleteAttendance' })

@@ -40,13 +40,7 @@ export class NamersResolver {
       return new UserInputError("Gorilla not found")
     }
     return this.prismaService.namers.create({
-      data: {
-        gorilla: data.gorilla,
-        ceremonyId: data.ceremonyId,
-        fullname: data.fullname,
-        isCompleted: data.isCompleted,
-        comment: data.comment
-      },
+      data: data
     });
   }
   @Mutation(returns => Namer, { nullable: true, name: 'updateNamer' })
@@ -61,13 +55,7 @@ export class NamersResolver {
       where: {
         id: namer.namer_id,
       },
-      data: {
-        gorilla: namer.data.gorilla,
-        ceremonyId: namer.data.ceremonyId,
-        fullname: namer.data.fullname,
-        isCompleted: namer.data.isCompleted,
-        comment: namer.data.comment
-      },
+      data: namer.data
     });
   }
 

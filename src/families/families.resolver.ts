@@ -38,10 +38,7 @@ export class FamiliesResolver {
       where: {
         id: family.family_id,
       },
-      data: {
-        family_name: family.data.family_name,
-        leader: family.data.leader
-      },
+      data:family.data
     });
   }
 
@@ -66,11 +63,7 @@ export class FamiliesResolver {
       return new UserInputError("Gorilla not found")
     }
     return this.prismaService.families.create({
-      data: {
-        leader: data.leader,
-        family_name: data.family_name,
-        
-      },
+      data: data
     });
   }
   @Mutation(returns => Family, { nullable: true, name: 'deleteFamily' })
