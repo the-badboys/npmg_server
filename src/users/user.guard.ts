@@ -2,6 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
+import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 
 @Injectable()
 export class UserGuard implements CanActivate {
@@ -13,7 +14,7 @@ export class UserGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context).getContext();
     if (!ctx.req.headers.authorization) {
-      return false;
+      throw new AuthenticationError("Not authenticated");
     }
 
     ctx.user = this.jwtService.verify(ctx.req.headers.authorization);
@@ -25,7 +26,7 @@ export class UserGuard implements CanActivate {
     if (roles.includes(ctx.user.role)) {
       return true;
     } else {
-      return false;
+      throw new ForbiddenError("Not authorized");
     }
   }
 }
