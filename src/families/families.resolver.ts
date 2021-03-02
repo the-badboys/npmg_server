@@ -21,16 +21,19 @@ export class FamiliesResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(returns => [Family], { nullable: true, name: 'getFamilies' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async families(@Context() ctx) {
     return this.prismaService.families.findMany({});
   }
   @Query(returns => Family, { nullable: true, name: 'getFamily' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async family(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.families.findUnique({
       where: { id },
     });
   }
   @Mutation(returns => Family, { nullable: true, name: 'updateFamily' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async updatefamily(@Args('update') family: UpdateFamily, @Context() ctx) {
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id:family.data.leader },
@@ -47,6 +50,7 @@ export class FamiliesResolver {
   }
 
   @Mutation(returns => Family)
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async addNewFamily(@Args('data') data: NewFamily, @Context() ctx) {
     const fam_exists = await this.prismaService.families.findUnique({
       where: { family_name: data.family_name },
@@ -71,6 +75,7 @@ export class FamiliesResolver {
     });
   }
   @Mutation(returns => Family, { nullable: true, name: 'deleteFamily' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN)
   async delete(@Args('id') id: string, @Context() ctx) {
     const npmg = await this.prismaService.families.findUnique({
       where: { id },
