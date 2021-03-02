@@ -11,6 +11,9 @@ import { Family } from './dto/family';
 import {NewFamily} from './inputs/create.input'
 import {UpdateFamily} from './inputs/update.input'
 import {AuthenticationError, UserInputError} from 'apollo-server-express'
+import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver(Family)
 export class FamiliesResolver {

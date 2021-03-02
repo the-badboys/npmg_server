@@ -12,6 +12,9 @@ import {
   import { PrismaService } from 'src/prisma.service';
   import {AuthenticationError, UserInputError} from 'apollo-server-express'
  import { DateRange } from './inputs/date.input';
+ import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver(Attendance)
 export class AttendanceResolver {

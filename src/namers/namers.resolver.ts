@@ -11,6 +11,9 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { NewNamer } from './input/create.input';
 import { UpdateNamer } from './input/update.input';
+import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver(Namer)
 export class NamersResolver {

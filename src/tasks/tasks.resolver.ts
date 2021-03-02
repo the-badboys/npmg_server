@@ -11,6 +11,9 @@ import {
   import {Task} from './dto/tasks'
   import { PrismaService } from 'src/prisma.service';
   import {AuthenticationError, UserInputError} from 'apollo-server-express'
+  import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver(Task)
 export class TasksResolver {

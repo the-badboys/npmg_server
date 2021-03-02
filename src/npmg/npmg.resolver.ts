@@ -5,6 +5,9 @@ import { Npmg } from './dto/npmg';
 import { NewNpmg } from './inputs/create.input';
 import { UpdateNpmg } from './inputs/update.input';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
+import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver(Npmg)
 export class NpmgResolver {
@@ -49,15 +52,7 @@ export class NpmgResolver {
       where: {
         id: npmg.npmg_id,
       },
-      data: {
-        name: npmg.data.name,
-        dob: npmg.data.dob,
-        mother: npmg.data.mother,
-        father: npmg.data.father,
-        isSilverBacked: npmg.data.isSilverBacked,
-        family: npmg.data.family,
-        gender: npmg.data.gender,
-      },
+      data: npmg.data
     });
   }
   @Mutation(returns => Npmg)
