@@ -5,17 +5,22 @@ import {
     Mutation,
     Context,
   } from '@nestjs/graphql';
-  import { Inject } from '@nestjs/common';
+  import { Inject, UseGuards } from '@nestjs/common';
   import {NewReport} from './inputs/create.input'
   import {UpdateReport} from './inputs/update.input'
   import {Report} from './dto/reports'
   import { PrismaService } from 'src/prisma.service';
   import {AuthenticationError, UserInputError} from 'apollo-server-express'
 import { DateRange } from 'src/attendance/inputs/date.input';
+import { UserGuard } from 'src/users/user.guard';
+import { Roles } from 'src/users/roles.decorator';
+import { ROLES } from 'src/users/user';
 
 @Resolver()
+@UseGuards(UserGuard)
 export class ReportsResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
+    @Roles(ROLES.DOCTOR,ROLES.ADMIN,)
   @Query(returns => [Report], { nullable: true, name: 'getAllReports' })
   async allReports(@Context() ctx) {
     return this.prismaService.reports.findMany({});

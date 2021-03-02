@@ -4,10 +4,8 @@ import {values} from '../dto/reports'
 @InputType()
 export class NewReport {
     @Field()
-    id: string;
-    @Field()
     gorilla: string;
-    @Field()
+    @Field({nullable: true})
     date: Date;
     @Field()
     lungs: values;
