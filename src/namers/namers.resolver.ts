@@ -20,22 +20,26 @@ import { ROLES } from 'src/users/user';
 export class NamersResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
     @Query(returns => [Namer], { nullable: true, name: 'getNamers' })
+    @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async namers(@Context() ctx) {
     return this.prismaService.namers.findMany({});
   }
   @Query(returns => Namer, { nullable: true, name: 'getNamer' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async namer(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.namers.findUnique({
       where: { id },
     });
   }
   @Query(returns => [Namer], { nullable: true, name: 'getCeremonyNamers' })
+  @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER,ROLES.USER)
   async namersinYear(@Args('id') id: string, @Context() ctx) {
     return await this.prismaService.namers.findMany({
       where: { ceremonyId: id },
     })[0];
   }
   @Mutation(returns => [Namer])
+  @Roles(ROLES.ADMIN)
   async addNewNamer(@Args('data') data: NewNamer, @Context() ctx) {
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.gorilla },
@@ -64,6 +68,7 @@ export class NamersResolver {
   }
 
   @Mutation(returns => Namer, { nullable: true, name: 'deleteNamer' })
+  @Roles(ROLES.ADMIN)
   async delete(@Args('id') id: string, @Context() ctx) {
     const npmg = await this.prismaService.namers.findUnique({
       where: { id },
