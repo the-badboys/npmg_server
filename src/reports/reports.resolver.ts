@@ -35,12 +35,7 @@ export class ReportsResolver {
   @Mutation(returns => Report)
   @Roles(ROLES.DOCTOR,ROLES.RANGER)
   async NewReport(@Args('data') data: NewReport, @Context() ctx) {
-    const user = await this.prismaService.users.findUnique({
-      where: { id:data.reporter },
-    });
-    if(!user){
-      return new UserInputError("Ranger not found")
-    }
+    data.reporter = ctx.user.id;
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id:data.gorilla },
     });
@@ -75,12 +70,7 @@ export class ReportsResolver {
   @Mutation(returns => Report, { nullable: true, name: 'updateReport' })
   @Roles(ROLES.DOCTOR,ROLES.RANGER)
   async updatenpmgreport(@Args('report_update') report: UpdateReport, @Context() ctx) {
-    const user = await this.prismaService.users.findUnique({
-      where: { id:report.data.reporter },
-    });
-    if(!user){
-      return new UserInputError("Ranger not found")
-    }
+    report.data.reporter = ctx.user.id;
     const npmg = await this.prismaService.npmg.findUnique({
       where: { id:report.data.gorilla },
     });

@@ -67,12 +67,7 @@ export class AttendanceResolver {
       if(!user){
         return new UserInputError("Ranger not found")
       }
-      const adder = await this.prismaService.users.findUnique({
-        where: { id:data.added_by },
-      });
-      if(!adder){
-        return new UserInputError("Reporter not found")
-      }
+      data.added_by = ctx.user.id;
       return this.prismaService.attendance.create({
         data: data
       });

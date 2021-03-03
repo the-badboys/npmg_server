@@ -21,7 +21,7 @@ export class TasksResolver {
     constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
     @Query(returns => [Task], { nullable: true, name: 'getAllTasks' })
     @Roles(ROLES.DOCTOR,ROLES.ADMIN,ROLES.RANGER)
-    async allReports(@Context() ctx) {
+    async allTasks(@Context() ctx) {
       return this.prismaService.tasks.findMany({});
     }
     @Query(returns => Task, { nullable: true, name: 'getTask' })
@@ -48,12 +48,7 @@ export class TasksResolver {
     @Mutation(returns => Task)
     @Roles(ROLES.ADMIN)
     async newTask(@Args('data') data: NewTask, @Context() ctx) {
-      const user = await this.prismaService.users.findUnique({
-        where: { id:data.added_by },
-      });
-      if(!user){
-        return new UserInputError("Leader not found")
-      }
+      data.added_by = ctx.user.id;
       return this.prismaService.tasks.create({
         data: data
       });
