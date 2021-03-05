@@ -21,6 +21,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from './user.guard';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { users } from '@prisma/client';
+import { Roles } from './roles.decorator';
 import * as bcrypt from 'bcrypt';
 
 @InputType()
@@ -156,10 +157,7 @@ export class UsersResolver {
         id: ctx.user.id,
       },
       data: {
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: data.role,
+        ...data,
       },
     });
 
@@ -190,5 +188,17 @@ export class UsersResolver {
       },
     });
     return updatedUser;
+  }
+
+  @Mutation(returns => User, { name: 'deleteUser' })
+  @UseGuards(UserGuard)
+  @Roles(ROLES.ADMIN)
+  async deleteUser(@Args('id') id: string, @Context() ctx) {
+    const deleteUser = await this.prismaService.users.delete({
+      where: {
+        id,
+      },
+    });
+    return deleteUser;
   }
 }
