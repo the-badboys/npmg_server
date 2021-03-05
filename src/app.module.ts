@@ -23,9 +23,7 @@ import { NotificationModule } from './notification/notification.module';
       playground: true,
       introspection: true,
       installSubscriptionHandlers: true,
-
       //TODO: (verite:) Error formatting cleanup
-
       // formatError: (error: GraphQLError) => {
       //   if (error.message === 'VALIDATION_ERROR') {
       //     const extensions = {

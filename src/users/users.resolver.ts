@@ -14,7 +14,8 @@ import { PrismaService } from 'src/prisma.service';
 import { hash, validatePassword } from '../utils/hashPassword';
 import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from './user.guard';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, isEmpty, IsNotEmpty } from 'class-validator';
+import { users } from '@prisma/client';
 
 @InputType()
 export class SingUpUserInput {
@@ -44,6 +45,22 @@ export class LoginUserInput {
   @Field()
   @IsNotEmpty()
   password: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  role: ROLES;
 }
 
 @ObjectType()
@@ -110,5 +127,26 @@ export class UsersResolver {
         role: data.role,
       },
     });
+  }
+
+  @Mutation(returns => User, { name: 'updateUser' })
+  @UseGuards(UserGuard)
+  async updateUser(
+    @Args('data') data: UpdateUserInput,
+    @Context() ctx,
+  ): Promise<users> {
+    const updatedUser = await this.prismaService.users.update({
+      where: {
+        id: ctx.user.id,
+      },
+      data: {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+      },
+    });
+
+    return updatedUser;
   }
 }
