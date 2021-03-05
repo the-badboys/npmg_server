@@ -11,6 +11,7 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './utils/jwtSetup';
 import { NotificationModule } from './notification/notification.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { NotificationModule } from './notification/notification.module';
     TasksModule,
     AttendanceModule,
     NotificationModule,
+    GroupsModule,
   ],
   controllers: [],
   providers: [],

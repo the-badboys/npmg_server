@@ -121,13 +121,12 @@ model notifications {
 
 
 
-model rangerGroups{
- id String @id @default(uuid())
- name String
- leaderId String
- created_at DateTime @default(now())
-// users reference
-}
+// model rangerGroups{
+//  id String @id @default(uuid())
+//  name String
+//  leaderId String
+//  created_at DateTime @default(now())
+// }
 
 
 
