@@ -1,4 +1,9 @@
-import { Inject, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -14,8 +19,9 @@ import { PrismaService } from 'src/prisma.service';
 import { hash, validatePassword } from '../utils/hashPassword';
 import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from './user.guard';
-import { IsEmail, isEmpty, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 import { users } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 @InputType()
 export class SingUpUserInput {
@@ -61,6 +67,16 @@ export class UpdateUserInput {
 
   @Field()
   role: ROLES;
+}
+
+@InputType()
+export class updatePasswordInput {
+  @Field()
+  currentPassword: string;
+
+  @Field(type => String)
+  @IsNotEmpty()
+  newPassword: string;
 }
 
 @ObjectType()
@@ -147,6 +163,32 @@ export class UsersResolver {
       },
     });
 
+    return updatedUser;
+  }
+
+  @Mutation(returns => User, { name: 'updateUserPassword' })
+  @UseGuards(UserGuard)
+  async updateUserPassword(
+    @Args('data') data: updatePasswordInput,
+    @Context() ctx,
+  ) {
+    const checkPassword = await bcrypt.compare(
+      data.currentPassword,
+      ctx.user.password,
+    );
+
+    if (!checkPassword) {
+      throw new ForbiddenException('Password mismatch');
+    }
+
+    const updatedUser = await this.prismaService.users.update({
+      where: {
+        id: ctx.user.id,
+      },
+      data: {
+        password: await hash(data.newPassword),
+      },
+    });
     return updatedUser;
   }
 }
