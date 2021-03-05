@@ -55,7 +55,6 @@ export class CeremonyResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
   @Query(() => [Ceremony], { name: 'getAllCeremonies' })
-  @Roles(ROLES.USER)
   async getAllCeremonies() {
     const ceremonies = this.prismaService.ceremonies.findMany({
       skip: 40,
@@ -88,6 +87,7 @@ export class CeremonyResolver {
   }
 
   @Mutation(() => Ceremony, { name: 'deleteCeremony' })
+  @Roles(ROLES.ADMIN)
   async deleteCeremony(@Args('id') id: string) {
     const deletedRecord = this.prismaService.ceremonies.delete({
       where: {
@@ -98,6 +98,7 @@ export class CeremonyResolver {
   }
 
   @Mutation(() => Ceremony, { name: 'updateCeremony' })
+  @Roles(ROLES.ADMIN, ROLES.RANGER, ROLES.DOCTOR)
   async updateCeremony(@Args('data') data: CeremonyUpdateInputType) {
     const ceremony = this.prismaService.ceremonies.update({
       where: {
