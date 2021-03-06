@@ -1,6 +1,4 @@
 # npmg server
-
-
 ## Running the app
 
 ```bash
