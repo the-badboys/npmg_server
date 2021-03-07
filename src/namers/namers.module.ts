@@ -11,6 +11,6 @@ import { jwtConstants } from 'src/utils/jwtSetup';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [NamersResolver,PrismaService]
+  providers: [NamersResolver, PrismaService],
 })
 export class NamersModule {}

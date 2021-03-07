@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/users/user';
 
 @ObjectType()
 export class groups {
@@ -15,5 +16,8 @@ export class groups {
   description: string;
 
   @Field()
-  createdAt: Date;
+  created_at: Date;
+
+  @Field()
+  leader: User;
 }

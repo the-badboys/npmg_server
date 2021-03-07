@@ -1,17 +1,12 @@
-import {
-    InputType,
-    Field,
-    ID
-  } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
 
-  import { NewReport} from './create.input'
+import { NewReport } from './create.input';
 
-  @InputType()
-export class  UpdateReport {
-  @Field(()=>NewReport,{nullable: true})
+@InputType()
+export class UpdateReport {
+  @Field(() => NewReport, { nullable: true })
   data: NewReport;
 
-  @Field(()=>ID,{nullable: true})
+  @Field(() => ID, { nullable: true })
   report_id: string;
-
 }

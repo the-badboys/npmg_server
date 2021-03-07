@@ -1,9 +1,9 @@
-import { Field, InputType} from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class DateRange {
-    @Field(type => String)
-    start: Date;
-    @Field(type => String)
-    end: Date;
+  @Field(type => String)
+  start: Date;
+  @Field(type => String)
+  end: Date;
 }

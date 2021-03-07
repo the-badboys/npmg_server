@@ -14,7 +14,7 @@ export class UserGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context).getContext();
     if (!ctx.req.headers.authorization) {
-      throw new AuthenticationError("Not authenticated");
+      throw new AuthenticationError('Not authenticated');
     }
 
     ctx.user = this.jwtService.verify(ctx.req.headers.authorization);
@@ -26,7 +26,7 @@ export class UserGuard implements CanActivate {
     if (roles.includes(ctx.user.role)) {
       return true;
     } else {
-      throw new ForbiddenError("Not authorized");
+      throw new ForbiddenError('Not authorized');
     }
   }
 }

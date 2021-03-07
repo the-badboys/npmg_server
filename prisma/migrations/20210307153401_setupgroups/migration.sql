@@ -32,7 +32,7 @@ CREATE TABLE "npmg" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isSilverBacked" BOOLEAN NOT NULL DEFAULT false,
-    "ceremonyId" TEXT NOT NULL,
+    "ceremonyId" TEXT NOT NULL DEFAULT E'',
     "ceremoniesId" TEXT,
 
     PRIMARY KEY ("id")
@@ -131,6 +131,16 @@ CREATE TABLE "notifications" (
     PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "rangerGroups" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "leaderId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users.email_unique" ON "users"("email");
 
@@ -157,3 +167,6 @@ ALTER TABLE "reports" ADD FOREIGN KEY ("gorilla") REFERENCES "npmg"("id") ON DEL
 
 -- AddForeignKey
 ALTER TABLE "notifications" ADD FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "rangerGroups" ADD FOREIGN KEY ("leaderId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

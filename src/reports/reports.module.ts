@@ -11,6 +11,6 @@ import { jwtConstants } from 'src/utils/jwtSetup';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [ReportsResolver,PrismaService]
+  providers: [ReportsResolver, PrismaService],
 })
 export class ReportsModule {}

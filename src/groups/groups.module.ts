@@ -8,7 +8,7 @@ import { GroupsResolver } from './groups.resolver';
   imports: [
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '24h' },
+      signOptions: { expiresIn: '30d' },
     }),
   ],
   providers: [GroupsResolver, PrismaService],

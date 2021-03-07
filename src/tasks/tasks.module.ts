@@ -11,6 +11,6 @@ import { jwtConstants } from 'src/utils/jwtSetup';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [TasksResolver,PrismaService]
+  providers: [TasksResolver, PrismaService],
 })
 export class TasksModule {}

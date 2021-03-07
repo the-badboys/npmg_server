@@ -1,14 +1,10 @@
-import {
-    InputType,
-    Field
-  } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
-export class  NewFamily {
+export class NewFamily {
   @Field()
   family_name: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   leader: string;
-
 }
