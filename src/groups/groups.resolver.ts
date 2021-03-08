@@ -31,7 +31,13 @@ export class GroupsResolver {
 
   @Query(() => groups, { name: 'getAllRangersGroups' })
   async getAllGroups(@Context() ctx) {
-    return this.prismaService.rangerGroups.findMany();
+    const rangers = await this.prismaService.rangerGroups.findMany({
+      include: {
+        leader: true,
+      },
+    });
+    // console.log(rangers);
+    return rangers;
   }
 
   @Query(() => groups, { name: 'getRangerGroup' })
