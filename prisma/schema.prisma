@@ -21,6 +21,7 @@ model users {
   reports       reports[]
   notifications notifications[] @relation("OneToNotified")
   rangerGroups  rangerGroups[]  @relation("leaderMustbeUser")
+  groupId       String
 }
 
 model npmg {
