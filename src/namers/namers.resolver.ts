@@ -32,7 +32,7 @@ export class NamersResolver {
       where: { ceremonyId: id },
     })[0];
   }
-  @Mutation(returns => [Namer])
+  @Mutation(returns => Namer)
   @Roles(ROLES.ADMIN)
   async addNewNamer(@Args('data') data: NewNamer, @Context() ctx) {
     const npmg = await this.prismaService.npmg.findUnique({
