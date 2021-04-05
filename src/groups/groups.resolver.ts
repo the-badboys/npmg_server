@@ -29,14 +29,13 @@ class NewGroupsInput {
 export class GroupsResolver {
   constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
 
-  @Query(() => groups, { name: 'getAllRangersGroups' })
+  @Query(() => groups, { name: 'getAllRangersGroups', nullable: false })
   async getAllGroups(@Context() ctx) {
     const rangers = await this.prismaService.rangerGroups.findMany({
       include: {
         leader: true,
       },
     });
-    // console.log(rangers);
     return rangers;
   }
 

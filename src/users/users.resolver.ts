@@ -1,5 +1,7 @@
 import {
   ForbiddenException,
+  HttpException,
+  HttpStatus,
   Inject,
   UnauthorizedException,
   UseGuards,
@@ -134,7 +136,18 @@ export class UsersResolver {
 
   @Mutation(returns => User)
   async signup(@Args('data') data: SingUpUserInput, @Context() ctx) {
+    const checkUserExists = await this.prismaService.users.findFirst({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (checkUserExists) {
+      throw new HttpException('Email already Exists', HttpStatus.BAD_REQUEST);
+    }
+
     const hashedPassword = await hash(data.password);
+
     return this.prismaService.users.create({
       data: {
         email: data.email,
