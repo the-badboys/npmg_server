@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm i
       - name: Run production migration
-        run: npx prisma migrate prod --preview-feature
+        run: npx prisma migrate deploy
         env:
           DATABASE_URL: postgres://dbxwqbbvzgvmus:bdc406d1da586b9df23d8b5153c5936b6c04752492b1759a1b33f82bccf0f504@ec2-54-146-73-98.compute-1.amazonaws.com:5432/d1oma4k1pboh15
       - uses: akhileshns/heroku-deploy@v3.4.6
