@@ -30,8 +30,7 @@ jobs:
           node-version: '12.x'
       - run: npm i
       # run the migration in the test database
-      - run: npm run db:push
-      - run: npm run test
+      - run: npx prisma migrate dev --preview-feature
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Only deploy master
