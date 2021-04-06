@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm ci
+      - run: npm i
       # run the migration in the test database
       - run: npm run db:push
       - run: npm run test
