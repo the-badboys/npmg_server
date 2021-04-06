@@ -1,4 +1,4 @@
-import { Field, InputType, ID } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { values } from '../dto/reports';
 
 @InputType()
@@ -21,8 +21,4 @@ export class NewReport {
   stomach: values;
   @Field({ nullable: true })
   reporter: string;
-  @Field({ nullable: true })
-  createdAt: Date;
-  @Field({ nullable: true })
-  updatedAt: Date;
 }
