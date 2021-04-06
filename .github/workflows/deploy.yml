@@ -38,7 +38,7 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci
+      - run: npm i
       - name: Run production migration
         run: npm run migrate:deploy
         env:
