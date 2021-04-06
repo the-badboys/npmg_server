@@ -31,3 +31,8 @@ $ npm run test:cov
   # if prisma setup is changed
   npx prisma migrate dev --preview-feature
 ```
+
+
+```bash
+  npx prisma migrate prod --preview-feature
+```
