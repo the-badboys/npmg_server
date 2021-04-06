@@ -1,4 +1,7 @@
 # npmg server
+[![Deploy](https://github.com/Mak-Mun/npmg-server/actions/workflows/deploy.yml/badge.svg)](https://github.com/Mak-Mun/npmg-server/actions/workflows/deploy.yml)
+
+
 ## Running the app
 
 ```bash
