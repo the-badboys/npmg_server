@@ -16,6 +16,7 @@ CREATE TABLE "users" (
     "role" "Role" NOT NULL,
     "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "groupId" TEXT,
 
     PRIMARY KEY ("id")
 );
