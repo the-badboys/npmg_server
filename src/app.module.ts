@@ -72,7 +72,6 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
             return graphQLFormattedError;
           } else {
             return {
-              // error: error.extensions?.exception,
               status: error.extensions?.exception.status,
               message: error.extensions?.exception?.response,
             };
