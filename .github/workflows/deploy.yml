@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm i
+      - run: yarn install
       # run the migration in the test database
       - run: npx prisma migrate dev --preview-feature
   deploy:
@@ -37,7 +37,7 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v2
-      - run: npm i
+      - run: yarn install
       - name: Run production migration
         run: npx prisma migrate deploy
         env:
