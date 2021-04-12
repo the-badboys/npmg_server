@@ -54,6 +54,11 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
           };
 
           return graphQLFormattedError;
+        } else if (!error.path) {
+          return {
+            message: error.message,
+            status: 400,
+          };
         } else {
           if (error.extensions.exception.name === 'JsonWebTokenError') {
             const graphQLFormattedError = {

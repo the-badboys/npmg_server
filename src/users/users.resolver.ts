@@ -28,7 +28,6 @@ import * as bcrypt from 'bcrypt';
 
 @InputType()
 export class SingUpUserInput {
-  @Field()
   @IsEmail()
   email: string;
 
@@ -48,6 +47,7 @@ export class SingUpUserInput {
 @InputType()
 export class LoginUserInput {
   @Field()
+  @IsEmail()
   @IsNotEmpty()
   email: string;
 
