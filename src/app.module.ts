@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UsersModule } from './users/users.module';
-import { NpmgModule } from './npmg/npmg.module';
-import { FamiliesModule } from './families/families.module';
-import { ReportsModule } from './reports/reports.module';
-import { NamersModule } from './namers/namers.module';
-import { CeremonyModule } from './ceremony/ceremony.module';
-import { TasksModule } from './tasks/tasks.module';
-import { AttendanceModule } from './attendance/attendance.module';
+import { UsersModule } from './modules/users.module';
+import { NpmgModule } from './modules/npmg.module';
+import { FamiliesModule } from './modules/families.module';
+import { ReportsModule } from './modules/reports.module';
+import { NamersModule } from './modules/namers.module';
+import { CeremonyModule } from './modules/ceremony.module';
+import { TasksModule } from './modules/tasks.module';
+import { AttendanceModule } from './modules/attendance.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './utils/jwtSetup';
-import { NotificationModule } from './notification/notification.module';
-import { GroupsModule } from './groups/groups.module';
+import { NotificationModule } from './modules/notification.module';
+import { GroupsModule } from './modules/groups.module';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 
 @Module({
@@ -24,6 +24,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
       autoSchemaFile: true,
       playground: true,
       introspection: true,
+
       installSubscriptionHandlers: true,
       formatError: (error: GraphQLError) => {
         if (error.message === 'VALIDATION_ERROR') {
