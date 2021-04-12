@@ -9,7 +9,14 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true
+    // "paths": {
+    //   "@modules/*": ["src/modules"],
+    //   "@resolvers/*": ["src/resolvers"],
+    //   "@dto/*": ["src/dto"],
+    //   "@inputs/*": ["src/inputs"],
+    //   "@models/*": ["src/models"]
+    // }
   }
 }
