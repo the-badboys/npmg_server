@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
-import { Roles } from 'src/roles.decorator';
+import { Roles } from 'src/decorators/roles.decorator';
 import { ROLES } from 'src/models/user';
 import { UserGuard } from 'src/guards/user.guard';
 import { Ceremony } from '../models/ceremony';

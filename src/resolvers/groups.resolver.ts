@@ -10,7 +10,7 @@ import {
 } from '@nestjs/graphql';
 import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { Roles } from 'src/roles.decorator';
+import { Roles } from 'src/decorators/roles.decorator';
 import { ROLES } from 'src/models/user';
 import { UserGuard } from 'src/guards/user.guard';
 import { groups } from '../models/groups';

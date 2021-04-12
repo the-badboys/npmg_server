@@ -23,7 +23,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserGuard } from '../guards/user.guard';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { users } from '@prisma/client';
-import { Roles } from '../roles.decorator';
+import { Roles } from '../decorators/roles.decorator';
 import * as bcrypt from 'bcrypt';
 
 @InputType()

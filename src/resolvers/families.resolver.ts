@@ -6,7 +6,7 @@ import { NewFamily } from '../inputs/FamilyCreate.input';
 import { UpdateFamily } from '../inputs/FamilyUpdate.input';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { UserGuard } from 'src/guards/user.guard';
-import { Roles } from 'src/roles.decorator';
+import { Roles } from 'src/decorators/roles.decorator';
 import { ROLES } from 'src/models/user';
 
 @Resolver(Family)

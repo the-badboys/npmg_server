@@ -6,7 +6,7 @@ import { NewNpmg } from '../inputs/NpmgCreate.input';
 import { UpdateNpmg } from '../inputs/NpmgUpdate.input';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { UserGuard } from 'src/guards/user.guard';
-import { Roles } from 'src/roles.decorator';
+import { Roles } from 'src/decorators/roles.decorator';
 import { ROLES } from 'src/models/user';
 
 @Resolver(Npmg)
