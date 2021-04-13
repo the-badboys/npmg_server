@@ -1,7 +1,6 @@
 import { Resolver, Query, Args, Mutation, Context } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 import { NewAttendance } from '../inputs/AttendanceCreate.input';
-import { UpdateAttendance } from '../inputs/AttendanceUpdate.input';
 import { Attendance } from '../models/attendance';
 import { PrismaService } from 'src/prisma.service';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
