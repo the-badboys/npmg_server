@@ -114,7 +114,7 @@ export class UsersResolver {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    let doPasswordsMatch = await validatePassword(
+    const doPasswordsMatch = await validatePassword(
       data.password,
       findUser.password,
     );
@@ -123,7 +123,7 @@ export class UsersResolver {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    let token = this.jwtService.sign(findUser);
+    const token = this.jwtService.sign(findUser);
 
     return { token };
   }

@@ -20,8 +20,8 @@ export class Ceremony {
   babies: [npmg];
 
   @Field(type => String)
-  venue: String;
+  venue: string;
 
   @Field(type => String)
-  description: String;
+  description: string;
 }
