@@ -13,12 +13,19 @@ import { ROLES } from 'src/models/user';
 @Resolver(Attendance)
 @UseGuards(UserGuard)
 export class AttendanceResolver {
-  constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
+
+
+  constructor(@Inject(PrismaService) private prismaService: PrismaService) { }
+
+
   @Query(returns => [Attendance], { nullable: true, name: 'getAllAttendances' })
   @Roles(ROLES.DOCTOR, ROLES.ADMIN, ROLES.RANGER)
   async allReports(@Context() ctx) {
     return this.prismaService.attendance.findMany({});
   }
+
+
+
   @Query(returns => Attendance, { nullable: true, name: 'getAttendance' })
   @Roles(ROLES.DOCTOR, ROLES.ADMIN, ROLES.RANGER)
   async attendance(@Args('id') id: string, @Context() ctx) {
@@ -26,6 +33,8 @@ export class AttendanceResolver {
       where: { id },
     });
   }
+
+
   @Query(returns => [Attendance], { nullable: true, name: 'getUserAttendance' })
   @Roles(ROLES.DOCTOR, ROLES.ADMIN, ROLES.RANGER)
   async user_attendance(@Args('id') id: string, @Context() ctx) {
@@ -40,10 +49,12 @@ export class AttendanceResolver {
       where: { date: day },
     });
   }
+
   @Query(returns => [Attendance], {
     nullable: true,
     name: 'getDateRangeAttendance',
   })
+
   @Roles(ROLES.ADMIN)
   async week_attendance(@Args('range') range: DateRange, @Context() ctx) {
     return this.prismaService.attendance.findMany({
@@ -55,6 +66,8 @@ export class AttendanceResolver {
       },
     });
   }
+
+
   @Mutation(returns => Attendance)
   @Roles(ROLES.DOCTOR, ROLES.ADMIN, ROLES.RANGER)
   async newAttendance(@Args('data') data: NewAttendance, @Context() ctx) {
@@ -69,6 +82,8 @@ export class AttendanceResolver {
       data: data,
     });
   }
+
+
   @Mutation(returns => Attendance, { nullable: true, name: 'deleteAttendance' })
   @Roles(ROLES.DOCTOR, ROLES.ADMIN)
   async delete(@Args('id') id: string, @Context() ctx) {
