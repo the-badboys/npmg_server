@@ -1,12 +1,12 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql'
 
-import { NewTask } from './Taskcreate.input';
+import { NewTask } from './Taskcreate.input'
 
 @InputType()
 export class UpdateTask {
   @Field(() => NewTask, { nullable: true })
-  data: NewTask;
+  data: NewTask
 
   @Field(() => ID, { nullable: true })
-  task_id: string;
+  task_id: string
 }

@@ -1,27 +1,27 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql';
-import { npmg } from '@prisma/client';
-import { Npmg } from './npmg';
+import { Field, ObjectType, ID } from '@nestjs/graphql'
+import { npmg } from '@prisma/client'
+import { Npmg } from './npmg'
 
 @ObjectType()
 export class Ceremony {
   @Field(type => ID)
-  id: string;
+  id: string
 
   @Field(type => Date)
-  ceremony_date: Date;
+  ceremony_date: Date
 
   @Field(type => Date)
-  created_at: Date;
+  created_at: Date
 
   @Field(type => String)
-  title: string;
+  title: string
 
   @Field(type => [Npmg])
-  babies: [npmg];
+  babies: [npmg]
 
   @Field(type => String)
-  venue: string;
+  venue: string
 
   @Field(type => String)
-  description: string;
+  description: string
 }

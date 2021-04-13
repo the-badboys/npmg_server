@@ -1,17 +1,17 @@
-import { Field, InputType, ID } from '@nestjs/graphql';
+import { Field, InputType, ID } from '@nestjs/graphql'
 
 @InputType()
 export class NewTask {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => ID)
-  group: string;
+  group: string
   @Field(type => ID)
-  added_by: string;
+  added_by: string
   @Field(type => Date)
-  date: Date;
+  date: Date
   @Field(type => ID)
-  family: string;
+  family: string
   @Field(type => Boolean)
-  isCompleted: boolean;
+  isCompleted: boolean
 }

@@ -1,21 +1,21 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql'
 
 @ObjectType()
 export class Task {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => ID)
-  group: string;
+  group: string
   @Field(type => ID)
-  added_by: string;
+  added_by: string
   @Field(type => Date)
-  date: Date;
+  date: Date
   @Field(type => Date)
-  createdAt: Date;
+  createdAt: Date
   @Field(type => Date)
-  updatedAt: Date;
+  updatedAt: Date
   @Field(type => ID)
-  family: string;
+  family: string
   @Field(type => Boolean)
-  isCompleted: boolean;
+  isCompleted: boolean
 }

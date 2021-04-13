@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, UseGuards } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, UseGuards } from '@nestjs/common'
 import {
   Args,
   Context,
@@ -7,21 +7,21 @@ import {
   Mutation,
   Query,
   Resolver,
-} from '@nestjs/graphql';
-import { Role } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
-import { Roles } from 'src/decorators/roles.decorator';
-import { ROLES } from 'src/models/user';
-import { UserGuard } from 'src/guards/user.guard';
-import { groups } from '../models/groups';
+} from '@nestjs/graphql'
+import { Role } from '@prisma/client'
+import { PrismaService } from 'src/prisma.service'
+import { Roles } from 'src/decorators/roles.decorator'
+import { ROLES } from 'src/models/user'
+import { UserGuard } from 'src/guards/user.guard'
+import { groups } from '../models/groups'
 
 @InputType()
 class NewGroupsInput {
   @Field()
-  name: string;
+  name: string
 
   @Field()
-  leaderId: string;
+  leaderId: string
 }
 
 @Resolver(groups)
@@ -35,8 +35,8 @@ export class GroupsResolver {
       include: {
         leader: true,
       },
-    });
-    return rangers;
+    })
+    return rangers
   }
 
   @Query(() => groups, { name: 'getRangerGroup' })
@@ -45,7 +45,7 @@ export class GroupsResolver {
       where: {
         id,
       },
-    });
+    })
   }
 
   @Mutation(() => groups, { name: 'createNewRangerGroup' })
@@ -55,7 +55,7 @@ export class GroupsResolver {
       where: {
         id: data.leaderId,
       },
-    });
+    })
 
     if (!checkIfRanger || checkIfRanger.role !== 'RANGER') {
       throw new HttpException(
@@ -64,13 +64,13 @@ export class GroupsResolver {
           error: 'Ranger not found',
         },
         403,
-      );
+      )
     }
 
     const newGroup = await this.prismaService.rangerGroups.create({
       data,
-    });
-    return newGroup;
+    })
+    return newGroup
   }
 
   @Mutation(() => groups, { name: 'updateRangeGroup' })
@@ -80,7 +80,7 @@ export class GroupsResolver {
         id: ctx.user.id,
       },
       data,
-    });
+    })
   }
 
   @Mutation(() => groups, { name: 'deleteRangerGroup' })
@@ -90,7 +90,7 @@ export class GroupsResolver {
       where: {
         id,
       },
-    });
-    return toDelete;
+    })
+    return toDelete
   }
 }

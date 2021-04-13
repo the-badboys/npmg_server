@@ -1,21 +1,21 @@
-import { Field, InputType, ID } from '@nestjs/graphql';
+import { Field, InputType, ID } from '@nestjs/graphql'
 
 @InputType()
 export class NewNamer {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => String)
-  fullname: string;
+  fullname: string
   @Field(type => String)
-  ceremonyId: string;
+  ceremonyId: string
   @Field(type => String)
-  comment: string;
+  comment: string
   @Field(type => ID)
-  gorilla: string;
+  gorilla: string
   @Field(type => Boolean)
-  isCompleted: boolean;
+  isCompleted: boolean
   @Field(type => Date)
-  createdAt: Date;
+  createdAt: Date
   @Field(type => Date)
-  updatedAt: Date;
+  updatedAt: Date
 }

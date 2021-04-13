@@ -1,31 +1,31 @@
-import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql'
 
 @ObjectType()
 export class Report {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => ID)
-  gorilla: string;
+  gorilla: string
   @Field(type => Date)
-  date: Date;
+  date: Date
   @Field(type => values)
-  lungs: values;
+  lungs: values
   @Field(type => values)
-  heart: values;
+  heart: values
   @Field(type => values)
-  legs: values;
+  legs: values
   @Field(type => values)
-  head: values;
+  head: values
   @Field(type => values)
-  eyes: values;
+  eyes: values
   @Field(type => values)
-  stomach: values;
+  stomach: values
   @Field(type => ID)
-  reporter: string;
+  reporter: string
   @Field(type => Date)
-  createdAt: Date;
+  createdAt: Date
   @Field(type => Date)
-  updatedAt: Date;
+  updatedAt: Date
 }
 
 export enum values {
@@ -37,4 +37,4 @@ export enum values {
 registerEnumType(values, {
   name: 'Values',
   description: 'Possible values of a report',
-});
+})

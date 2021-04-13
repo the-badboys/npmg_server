@@ -1,23 +1,23 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/models/user';
+import { Field, ObjectType } from '@nestjs/graphql'
+import { User } from 'src/models/user'
 
 @ObjectType()
 export class groups {
   @Field()
-  id: string;
+  id: string
 
   @Field()
-  leaderId: string;
+  leaderId: string
 
   @Field()
-  name: string;
+  name: string
 
   @Field()
-  description: string;
+  description: string
 
   @Field()
-  created_at: Date;
+  created_at: Date
 
   @Field()
-  leader: User;
+  leader: User
 }

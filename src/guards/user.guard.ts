@@ -1,8 +1,8 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { JwtService } from '@nestjs/jwt';
-import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
+import { GqlExecutionContext } from '@nestjs/graphql'
+import { JwtService } from '@nestjs/jwt'
+import { AuthenticationError, ForbiddenError } from 'apollo-server-express'
 
 @Injectable()
 export class UserGuard implements CanActivate {
@@ -12,21 +12,21 @@ export class UserGuard implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const ctx = GqlExecutionContext.create(context).getContext();
+    const ctx = GqlExecutionContext.create(context).getContext()
     if (!ctx.req.headers.authorization) {
-      throw new AuthenticationError('Not authenticated');
+      throw new AuthenticationError('Not authenticated')
     }
 
-    ctx.user = this.jwtService.verify(ctx.req.headers.authorization);
+    ctx.user = this.jwtService.verify(ctx.req.headers.authorization)
 
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    const roles = this.reflector.get<string[]>('roles', context.getHandler())
 
-    if (!roles) return true;
+    if (!roles) return true
 
     if (roles.includes(ctx.user.role)) {
-      return true;
+      return true
     } else {
-      throw new ForbiddenError('Not authorized');
+      throw new ForbiddenError('Not authorized')
     }
   }
 }

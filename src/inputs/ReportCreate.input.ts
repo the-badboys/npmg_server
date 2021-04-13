@@ -1,24 +1,24 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { values } from '../models/reports';
+import { Field, InputType } from '@nestjs/graphql'
+import { values } from '../models/reports'
 
 @InputType()
 export class NewReport {
   @Field()
-  gorilla: string;
+  gorilla: string
   @Field({ nullable: true })
-  date: Date;
+  date: Date
   @Field()
-  lungs: values;
+  lungs: values
   @Field()
-  heart: values;
+  heart: values
   @Field()
-  legs: values;
+  legs: values
   @Field()
-  head: values;
+  head: values
   @Field()
-  eyes: values;
+  eyes: values
   @Field()
-  stomach: values;
+  stomach: values
   @Field({ nullable: true })
-  reporter: string;
+  reporter: string
 }

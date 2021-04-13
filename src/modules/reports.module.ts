@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { ReportsResolver } from '../resolvers/reports.resolver';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from 'src/utils/jwtSetup';
+import { Module } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { ReportsResolver } from '../resolvers/reports.resolver'
+import { JwtModule } from '@nestjs/jwt'
+import { jwtConstants } from 'src/utils/jwtSetup'
 
 @Module({
   imports: [

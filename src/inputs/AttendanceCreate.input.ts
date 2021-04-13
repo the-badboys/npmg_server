@@ -1,15 +1,15 @@
-import { Field, InputType, ID } from '@nestjs/graphql';
+import { Field, InputType, ID } from '@nestjs/graphql'
 
 @InputType()
 export class NewAttendance {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => String)
-  attendant: string;
+  attendant: string
   @Field(type => String)
-  added_by: string;
+  added_by: string
   @Field(type => String)
-  date: Date;
+  date: Date
   @Field(type => Boolean)
-  isPresent: boolean;
+  isPresent: boolean
 }

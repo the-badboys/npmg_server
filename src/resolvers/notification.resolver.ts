@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject } from '@nestjs/common'
 import {
   Resolver,
   Query,
@@ -8,33 +8,33 @@ import {
   Field,
   Context,
   InputType,
-} from '@nestjs/graphql';
-import { PubSub } from 'apollo-server-express';
-import { title } from 'process';
-import { PrismaService } from 'src/prisma.service';
-import { Notification, NotificationTypes } from '../models/notification';
+} from '@nestjs/graphql'
+import { PubSub } from 'apollo-server-express'
+import { title } from 'process'
+import { PrismaService } from 'src/prisma.service'
+import { Notification, NotificationTypes } from '../models/notification'
 
-const pubSub = new PubSub();
+const pubSub = new PubSub()
 
 @InputType()
 class NotificationInput {
   @Field()
-  title: string;
+  title: string
 
   @Field()
-  message: string;
+  message: string
 
   @Field()
-  userId: string;
+  userId: string
 
   @Field({ nullable: true })
-  isRead: boolean;
+  isRead: boolean
 
   @Field()
-  emailTo: string;
+  emailTo: string
 
   @Field(type => NotificationTypes)
-  notification_type: NotificationTypes;
+  notification_type: NotificationTypes
 }
 
 @Resolver(Notification)
@@ -43,7 +43,7 @@ export class NotificationResolver {
 
   @Query(returns => Notification, { name: 'getAllNotifications' })
   async getAllNotifications() {
-    return this.prismaService.notifications.findMany();
+    return this.prismaService.notifications.findMany()
   }
 
   @Mutation(returns => Notification, { name: 'createNewNotification' })
@@ -56,13 +56,13 @@ export class NotificationResolver {
         userId: data.userId,
         emailTo: data.emailTo,
       },
-    });
-    pubSub.publish('notificationAdded', { notificationAdded: notification });
-    return notification;
+    })
+    pubSub.publish('notificationAdded', { notificationAdded: notification })
+    return notification
   }
 
   @Subscription(returns => Notification)
   notificationAdded() {
-    return pubSub.asyncIterator('notificationAdded');
+    return pubSub.asyncIterator('notificationAdded')
   }
 }

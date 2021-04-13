@@ -1,4 +1,4 @@
-import { Inject, SetMetadata, UseGuards } from '@nestjs/common';
+import { Inject, SetMetadata, UseGuards } from '@nestjs/common'
 import {
   Args,
   Field,
@@ -6,47 +6,47 @@ import {
   Mutation,
   Query,
   Resolver,
-} from '@nestjs/graphql';
-import { PrismaService } from 'src/prisma.service';
-import { Roles } from 'src/decorators/roles.decorator';
-import { ROLES } from 'src/models/user';
-import { UserGuard } from 'src/guards/user.guard';
-import { Ceremony } from '../models/ceremony';
+} from '@nestjs/graphql'
+import { PrismaService } from 'src/prisma.service'
+import { Roles } from 'src/decorators/roles.decorator'
+import { ROLES } from 'src/models/user'
+import { UserGuard } from 'src/guards/user.guard'
+import { Ceremony } from '../models/ceremony'
 
 @InputType()
 export class CeremonyInputType {
   @Field()
-  title: string;
+  title: string
 
   @Field()
-  description: string;
+  description: string
 
   @Field()
-  ceremony_date: Date;
+  ceremony_date: Date
 
   @Field()
-  venue: string;
+  venue: string
 }
 
 @InputType()
 export class CeremonyUpdateInputType {
   @Field()
-  id: string;
+  id: string
 
   @Field()
-  title: string;
+  title: string
 
   @Field()
-  description: string;
+  description: string
 
   @Field()
-  babies: string;
+  babies: string
 
   @Field()
-  ceremony_date: Date;
+  ceremony_date: Date
 
   @Field()
-  venue: string;
+  venue: string
 }
 
 @Resolver(Ceremony)
@@ -59,8 +59,8 @@ export class CeremonyResolver {
     const ceremonies = this.prismaService.ceremonies.findMany({
       skip: 40,
       take: 10,
-    });
-    return ceremonies;
+    })
+    return ceremonies
   }
 
   @Query(() => Ceremony, { nullable: true, name: 'getCeremony' })
@@ -69,8 +69,8 @@ export class CeremonyResolver {
       where: {
         id,
       },
-    });
-    return ceremony;
+    })
+    return ceremony
   }
 
   @Mutation(() => Ceremony, { name: 'createCeremony' })
@@ -82,8 +82,8 @@ export class CeremonyResolver {
         description: dataArgs.description,
         ceremony_date: dataArgs.ceremony_date,
       },
-    });
-    return ceremony;
+    })
+    return ceremony
   }
 
   @Mutation(() => Ceremony, { name: 'deleteCeremony' })
@@ -93,8 +93,8 @@ export class CeremonyResolver {
       where: {
         id,
       },
-    });
-    return deletedRecord;
+    })
+    return deletedRecord
   }
 
   @Mutation(() => Ceremony, { name: 'updateCeremony' })
@@ -110,8 +110,8 @@ export class CeremonyResolver {
         title: data.title,
         description: data.description,
       },
-    });
+    })
 
-    return ceremony;
+    return ceremony
   }
 }

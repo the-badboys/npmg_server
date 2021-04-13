@@ -1,23 +1,23 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql'
 
 @ObjectType()
 export class Npmg {
   @Field(type => ID)
-  id: string;
+  id: string
   @Field(type => String)
-  name: string;
+  name: string
   @Field(type => String)
-  mother: string;
+  mother: string
   @Field(type => String)
-  gender: string;
+  gender: string
   @Field(type => String)
-  father: string;
+  father: string
   @Field(type => String)
-  family: string;
+  family: string
   @Field(type => Boolean)
-  isSilverBacked: boolean;
+  isSilverBacked: boolean
   @Field(type => Date)
-  createdAt: Date;
+  createdAt: Date
   @Field(type => Date)
-  updatedAt: Date;
+  updatedAt: Date
 }

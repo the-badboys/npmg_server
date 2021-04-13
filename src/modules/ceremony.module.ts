@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from 'src/utils/jwtSetup';
-import { CeremonyResolver } from '../resolvers/ceremony.resolver';
+import { Module } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { JwtModule } from '@nestjs/jwt'
+import { jwtConstants } from 'src/utils/jwtSetup'
+import { CeremonyResolver } from '../resolvers/ceremony.resolver'
 
 @Module({
   imports: [
