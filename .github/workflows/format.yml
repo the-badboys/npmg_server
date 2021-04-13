@@ -1,4 +1,4 @@
-name: lint
+name: format
 on:
   push:
   pull_request:
@@ -13,6 +13,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: lint
+      - name: format
         run: yarn install
-        run: yarn lint
+        run: yarn format

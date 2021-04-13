@@ -5,43 +5,43 @@ import {
   Inject,
   UnauthorizedException,
   UseGuards,
-} from '@nestjs/common';
+} from '@nestjs/common'
 import {
-  Resolver,
-  Query,
   Args,
-  Mutation,
   Context,
   Field,
   InputType,
+  Mutation,
   ObjectType,
-} from '@nestjs/graphql';
-import { ROLES, User } from '../models/user';
-import { PrismaService } from 'src/prisma.service';
-import { hash, validatePassword } from '../utils/hashPassword';
-import { JwtService } from '@nestjs/jwt';
-import { UserGuard } from '../guards/user.guard';
-import { IsEmail, IsNotEmpty } from 'class-validator';
-import { users } from '@prisma/client';
-import { Roles } from '../decorators/roles.decorator';
-import * as bcrypt from 'bcrypt';
+  Query,
+  Resolver,
+} from '@nestjs/graphql'
+import { JwtService } from '@nestjs/jwt'
+import { users } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
+import { IsEmail, IsNotEmpty } from 'class-validator'
+import { PrismaService } from 'src/prisma.service'
+import { Roles } from '../decorators/roles.decorator'
+import { UserGuard } from '../guards/user.guard'
+import { ROLES, User } from '../models/user'
+import { hash, validatePassword } from '../utils/hashPassword'
 
 @InputType()
 export class SingUpUserInput {
   @IsEmail()
-  email: string;
+  email: string
 
   @Field()
-  firstName: string;
+  firstName: string
 
   @Field()
-  lastName: string;
+  lastName: string
 
   @Field()
-  password: string;
+  password: string
 
   @Field(type => ROLES)
-  role: ROLES;
+  role: ROLES
 }
 
 @InputType()
@@ -49,43 +49,43 @@ export class LoginUserInput {
   @Field()
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email: string
 
   @Field()
   @IsNotEmpty()
-  password: string;
+  password: string
 }
 
 @InputType()
 export class UpdateUserInput {
   @Field()
   @IsEmail()
-  email: string;
+  email: string
 
   @Field()
-  firstName: string;
+  firstName: string
 
   @Field()
-  lastName: string;
+  lastName: string
 
   @Field()
-  role: ROLES;
+  role: ROLES
 }
 
 @InputType()
 export class updatePasswordInput {
   @Field()
-  currentPassword: string;
+  currentPassword: string
 
   @Field(type => String)
   @IsNotEmpty()
-  newPassword: string;
+  newPassword: string
 }
 
 @ObjectType()
 export class LoginResponse {
   @Field()
-  token: string;
+  token: string
 }
 
 @Resolver(User)
@@ -99,7 +99,7 @@ export class UsersResolver {
   async user(@Args('id') id: string, @Context() ctx) {
     return this.prismaService.users.findUnique({
       where: { id },
-    });
+    })
   }
 
   @Mutation(returns => LoginResponse, { name: 'login' })
@@ -108,30 +108,30 @@ export class UsersResolver {
       where: {
         email: data.email,
       },
-    });
+    })
 
     if (!findUser) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('Invalid email or password')
     }
 
     const doPasswordsMatch = await validatePassword(
       data.password,
       findUser.password,
-    );
+    )
 
     if (!doPasswordsMatch) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('Invalid email or password')
     }
 
-    const token = this.jwtService.sign(findUser);
+    const token = this.jwtService.sign(findUser)
 
-    return { token };
+    return { token }
   }
 
   @Query(returns => User, { nullable: true, name: 'me' })
   @UseGuards(UserGuard)
   async getLoggedIn(@Context() ctx) {
-    return ctx.user;
+    return ctx.user
   }
 
   @Mutation(returns => User)
@@ -140,13 +140,13 @@ export class UsersResolver {
       where: {
         email: data.email,
       },
-    });
+    })
 
     if (checkUserExists) {
-      throw new HttpException('Email already Exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Email already Exists', HttpStatus.BAD_REQUEST)
     }
 
-    const hashedPassword = await hash(data.password);
+    const hashedPassword = await hash(data.password)
 
     return this.prismaService.users.create({
       data: {
@@ -156,7 +156,7 @@ export class UsersResolver {
         password: hashedPassword,
         role: data.role,
       },
-    });
+    })
   }
 
   @Mutation(returns => User, { name: 'updateUser' })
@@ -172,9 +172,9 @@ export class UsersResolver {
       data: {
         ...data,
       },
-    });
+    })
 
-    return updatedUser;
+    return updatedUser
   }
 
   @Mutation(returns => User, { name: 'updateUserPassword' })
@@ -186,10 +186,10 @@ export class UsersResolver {
     const checkPassword = await bcrypt.compare(
       data.currentPassword,
       ctx.user.password,
-    );
+    )
 
     if (!checkPassword) {
-      throw new ForbiddenException('Password mismatch');
+      throw new ForbiddenException('Password mismatch')
     }
 
     const updatedUser = await this.prismaService.users.update({
@@ -199,8 +199,8 @@ export class UsersResolver {
       data: {
         password: await hash(data.newPassword),
       },
-    });
-    return updatedUser;
+    })
+    return updatedUser
   }
 
   @Mutation(returns => User, { name: 'deleteUser' })
@@ -211,7 +211,7 @@ export class UsersResolver {
       where: {
         id,
       },
-    });
-    return deleteUser;
+    })
+    return deleteUser
   }
 }
