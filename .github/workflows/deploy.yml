@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - run: yarn install
+      - run: yarn install --only=production --ignore-scripts
       # run the migration in the test database
       - run: npx prisma migrate dev --preview-feature
   deploy:
@@ -37,7 +37,7 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install
+      - run: yarn install --only=production --ignore-scripts
       - name: Run production migration
         run: npx prisma migrate deploy
         env:
