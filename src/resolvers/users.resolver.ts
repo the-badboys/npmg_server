@@ -135,7 +135,7 @@ export class UsersResolver {
   }
 
   @Mutation(returns => User)
-  async signup(@Args('data') data: SingUpUserInput, @Context() ctx) {
+  async signup(@Args('data') data: SingUpUserInput) {
     const checkUserExists = await this.prismaService.users.findFirst({
       where: {
         email: data.email,
