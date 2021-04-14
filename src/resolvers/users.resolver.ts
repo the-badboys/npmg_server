@@ -29,19 +29,19 @@ import { hash, validatePassword } from '../utils/hashPassword'
 @InputType()
 export class SingUpUserInput {
   @IsEmail()
-  email: string
+  email!: string
 
   @Field()
-  firstName: string
+  firstName!: string
 
   @Field()
-  lastName: string
+  lastName!: string
 
   @Field()
-  password: string
+  password!: string
 
   @Field(type => ROLES)
-  role: ROLES
+  role!: ROLES
 }
 
 @InputType()
@@ -49,43 +49,42 @@ export class LoginUserInput {
   @Field()
   @IsEmail()
   @IsNotEmpty()
-  email: string
+  email!: string
 
   @Field()
   @IsNotEmpty()
-  password: string
+  password!: string
 }
 
 @InputType()
 export class UpdateUserInput {
   @Field()
-  @IsEmail()
-  email: string
+  email!: string
 
   @Field()
-  firstName: string
+  firstName!: string
 
   @Field()
-  lastName: string
+  lastName!: string
 
   @Field()
-  role: ROLES
+  role!: ROLES
 }
 
 @InputType()
 export class updatePasswordInput {
   @Field()
-  currentPassword: string
+  currentPassword!: string
 
   @Field(type => String)
   @IsNotEmpty()
-  newPassword: string
+  newPassword!: string
 }
 
 @ObjectType()
 export class LoginResponse {
   @Field()
-  token: string
+  token!: string
 }
 
 @Resolver(User)
@@ -96,14 +95,14 @@ export class UsersResolver {
   ) {}
 
   @Query(returns => User, { nullable: true, name: 'getUser' })
-  async user(@Args('id') id: string, @Context() ctx) {
+  async user(@Args('id') id: string) {
     return this.prismaService.users.findUnique({
       where: { id },
     })
   }
 
   @Mutation(returns => LoginResponse, { name: 'login' })
-  async loginUser(@Args('data') data: LoginUserInput, @Context() ctx) {
+  async loginUser(@Args('data') data: LoginUserInput) {
     const findUser = await this.prismaService.users.findUnique({
       where: {
         email: data.email,

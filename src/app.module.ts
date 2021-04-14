@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
-import { UsersModule } from './modules/users.module'
-import { NpmgModule } from './modules/npmg.module'
-import { FamiliesModule } from './modules/families.module'
-import { ReportsModule } from './modules/reports.module'
-import { NamersModule } from './modules/namers.module'
-import { CeremonyModule } from './modules/ceremony.module'
-import { TasksModule } from './modules/tasks.module'
-import { AttendanceModule } from './modules/attendance.module'
 import { JwtModule } from '@nestjs/jwt'
-import { jwtConstants } from './utils/jwtSetup'
-import { NotificationModule } from './modules/notification.module'
-import { GroupsModule } from './modules/groups.module'
 import { GraphQLError, GraphQLFormattedError } from 'graphql'
+import { AttendanceModule } from './modules/attendance.module'
+import { CeremonyModule } from './modules/ceremony.module'
+import { FamiliesModule } from './modules/families.module'
+import { GroupsModule } from './modules/groups.module'
+import { NamersModule } from './modules/namers.module'
+import { NotificationModule } from './modules/notification.module'
+import { NpmgModule } from './modules/npmg.module'
+import { ReportsModule } from './modules/reports.module'
+import { TasksModule } from './modules/tasks.module'
+import { UsersModule } from './modules/users.module'
+import { jwtConstants } from './utils/jwtSetup'
 
 @Module({
   imports: [
@@ -77,10 +77,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql'
             }
             return graphQLFormattedError
           } else {
-            return {
-              status: error.extensions?.exception.status,
-              message: error.extensions?.exception?.response,
-            }
+            return error.extensions?.exception?.response
           }
         }
       },
