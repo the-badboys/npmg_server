@@ -2,8 +2,6 @@ import { Inject } from '@nestjs/common'
 import {
   Args,
   Context,
-  Field,
-  InputType,
   Mutation,
   Query,
   Resolver,
@@ -11,30 +9,10 @@ import {
 } from '@nestjs/graphql'
 import { PubSub } from 'apollo-server-express'
 import { PrismaService } from 'src/prisma.service'
-import { Notification, NotificationTypes } from '../models/notification'
+import { NotificationInput } from '../inputs/createNotification.input'
+import { Notification } from '../models/notification'
 
 const pubSub = new PubSub()
-
-@InputType()
-class NotificationInput {
-  @Field()
-  title: string
-
-  @Field()
-  message: string
-
-  @Field()
-  userId: string
-
-  @Field({ nullable: true })
-  isRead: boolean
-
-  @Field()
-  emailTo: string
-
-  @Field(type => NotificationTypes)
-  notification_type: NotificationTypes
-}
 
 @Resolver(Notification)
 export class NotificationResolver {
