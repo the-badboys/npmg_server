@@ -1,16 +1,15 @@
 import { Inject } from '@nestjs/common'
 import {
-  Resolver,
-  Query,
-  Subscription,
-  Mutation,
   Args,
-  Field,
   Context,
+  Field,
   InputType,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
 } from '@nestjs/graphql'
 import { PubSub } from 'apollo-server-express'
-import { title } from 'process'
 import { PrismaService } from 'src/prisma.service'
 import { Notification, NotificationTypes } from '../models/notification'
 
