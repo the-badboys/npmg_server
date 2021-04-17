@@ -10,7 +10,6 @@ import {
   Args,
   Context,
   Field,
-  InputType,
   Mutation,
   ObjectType,
   Query,
@@ -19,67 +18,15 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { users } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
-import { IsEmail, IsNotEmpty } from 'class-validator'
 import { PrismaService } from 'src/prisma.service'
 import { Roles } from '../decorators/roles.decorator'
 import { UserGuard } from '../guards/user.guard'
+import { LoginUserInput } from '../inputs/LoginUser.input'
+import { SingUpUserInput } from '../inputs/SingUpUser.input'
+import { updatePasswordInput } from '../inputs/updatePassword.input'
+import { UpdateUserInput } from '../inputs/UpdateUser.input'
 import { ROLES, User } from '../models/user'
 import { hash, validatePassword } from '../utils/hashPassword'
-
-@InputType()
-export class SingUpUserInput {
-  @IsEmail()
-  email!: string
-
-  @Field()
-  firstName!: string
-
-  @Field()
-  lastName!: string
-
-  @Field()
-  password!: string
-
-  @Field(type => ROLES)
-  role!: ROLES
-}
-
-@InputType()
-export class LoginUserInput {
-  @Field()
-  @IsEmail()
-  @IsNotEmpty()
-  email!: string
-
-  @Field()
-  @IsNotEmpty()
-  password!: string
-}
-
-@InputType()
-export class UpdateUserInput {
-  @Field()
-  email!: string
-
-  @Field()
-  firstName!: string
-
-  @Field()
-  lastName!: string
-
-  @Field()
-  role!: ROLES
-}
-
-@InputType()
-export class updatePasswordInput {
-  @Field()
-  currentPassword!: string
-
-  @Field(type => String)
-  @IsNotEmpty()
-  newPassword!: string
-}
 
 @ObjectType()
 export class LoginResponse {
