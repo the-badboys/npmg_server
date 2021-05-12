@@ -3,7 +3,8 @@ import { IsEmail } from 'class-validator'
 import { ROLES } from 'src/models/user'
 
 @InputType()
-export class SingUpUserInput {
+export class SignUpUserInput {
+  @Field()
   @IsEmail()
   email!: string
 

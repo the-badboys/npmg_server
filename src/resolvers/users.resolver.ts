@@ -22,7 +22,7 @@ import { PrismaService } from 'src/prisma.service'
 import { Roles } from '../decorators/roles.decorator'
 import { UserGuard } from '../guards/user.guard'
 import { LoginUserInput } from '../inputs/LoginUser.input'
-import { SingUpUserInput } from '../inputs/SingUpUser.input'
+import { SignUpUserInput } from '../inputs/SingUpUser.input'
 import { updatePasswordInput } from '../inputs/updatePassword.input'
 import { UpdateUserInput } from '../inputs/UpdateUser.input'
 import { ROLES, User } from '../models/user'
@@ -81,7 +81,7 @@ export class UsersResolver {
   }
 
   @Mutation(returns => User)
-  async signup(@Args('data') data: SingUpUserInput) {
+  async signup(@Args('data') data: SignUpUserInput) {
     const checkUserExists = await this.prismaService.users.findFirst({
       where: {
         email: data.email,
