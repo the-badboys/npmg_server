@@ -27,6 +27,7 @@ import { jwtConstants } from './utils/jwtSetup'
 
       installSubscriptionHandlers: true,
       formatError: (error: GraphQLError) => {
+        console.log({ error })
         if (error.message === 'VALIDATION_ERROR') {
           const extensions = {
             code: 'VALIDATION_ERROR',
@@ -55,6 +56,12 @@ import { jwtConstants } from './utils/jwtSetup'
           }
 
           return graphQLFormattedError
+        } else if (error.extensions.code === 'UNAUTHENTICATED') {
+          return {
+            status: 400,
+            message: 'Not authenticated',
+            error: 'Unauthenticated',
+          }
         } else if (!error.path) {
           return {
             message: error.message,
