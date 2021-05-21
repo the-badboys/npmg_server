@@ -1388,14 +1388,14 @@
     webpack "5.28.0"
     webpack-node-externals "2.5.2"
 
-"@nestjs/common@^7.5.1":
-  version "7.6.15"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.6.15.tgz#ae96f18cb6209a21724ffa7ed1a182be1e4fd0af"
-  integrity sha512-H/3Nk7M02Fc4YN9St05i34gZKVuzE54gd5eXAX6WwisqU5fQ00kss1pYGbltjb2QGu3A/fpO1MdYEwOA18Z/VQ==
+"@nestjs/common@^7.6.17":
+  version "7.6.17"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.6.17.tgz#623c7f93117bea15fff07a6b63fcd644a8764655"
+  integrity sha512-RHvD32FxfV7yDWX9GPmn0ZSv7ka5kLeVamU5ZpoXSTUjkGqWFt3MTyIP+HUQD2778kDqT+CgEtVJ1fxDG5Oh9g==
   dependencies:
     axios "0.21.1"
     iterare "1.2.1"
-    tslib "2.1.0"
+    tslib "2.2.0"
     uuid "8.3.2"
 
 "@nestjs/core@^7.5.1":
@@ -2456,10 +2456,10 @@ apollo-server-caching@^0.7.0:
   dependencies:
     lru-cache "^6.0.0"
 
-apollo-server-core@^2.23.0, apollo-server-core@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-2.24.0.tgz#60313e5bd265422d53fe0ffbd45760046465f5f0"
-  integrity sha512-uW7gykPzhin9fLgSvciN8tX7098mHnUM79W3+fWfK5J415JidIqW9O+JhYmEPo6BCgosu0cKSdYe7NB+FP4lFQ==
+apollo-server-core@^2.23.0, apollo-server-core@^2.24.0, apollo-server-core@^2.24.1:
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-2.24.1.tgz#304d265f6033f6b91d880b8498fcc75d72dead40"
+  integrity sha512-+T7G2EsC5N/AVo0QJo13r1kFgJk0HTK55YlXbnpJl6qRUF8yKLXMittvIfTWge0uLQGzFzVRhDZ7AQMt/E1TGA==
   dependencies:
     "@apollographql/apollo-tools" "^0.5.0"
     "@apollographql/graphql-playground-html" "1.6.27"
@@ -2501,10 +2501,10 @@ apollo-server-errors@^2.5.0:
   resolved "https://registry.yarnpkg.com/apollo-server-errors/-/apollo-server-errors-2.5.0.tgz#5d1024117c7496a2979e3e34908b5685fe112b68"
   integrity sha512-lO5oTjgiC3vlVg2RKr3RiXIIQ5pGXBFxYGGUkKDhTud3jMIhs+gel8L8zsEjKaKxkjHhCQAA/bcEfYiKkGQIvA==
 
-apollo-server-express@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/apollo-server-express/-/apollo-server-express-2.24.0.tgz#f17444929fc776fa1c166d8bad9685bd65dfa1c9"
-  integrity sha512-wVoD53azxqVZt/i4yAm6cDDCXpbzr0AJpzOdNXVFW/KivInWEMF5ekCc80uMOawPeu78U7Skoc20akyvZKc+YA==
+apollo-server-express@^2.24.1:
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/apollo-server-express/-/apollo-server-express-2.24.1.tgz#622d56469b549f3ccef589b6a6c3ae6cbe1f25d8"
+  integrity sha512-waBGJYG6Ht86RHMcTQLjy3YNeccg5IONe10qdm/kGbQVMXoE6KJB2VuNy/akRDPRvS6+tEt4v0XFSi7qQa4iXQ==
   dependencies:
     "@apollographql/graphql-playground-html" "1.6.27"
     "@types/accepts" "^1.3.5"
@@ -2513,7 +2513,7 @@ apollo-server-express@^2.24.0:
     "@types/express" "4.17.11"
     "@types/express-serve-static-core" "4.17.19"
     accepts "^1.3.5"
-    apollo-server-core "^2.24.0"
+    apollo-server-core "^2.24.1"
     apollo-server-types "^0.8.0"
     body-parser "^1.18.3"
     cors "^2.8.5"
