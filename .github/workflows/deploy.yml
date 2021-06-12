@@ -41,9 +41,9 @@ jobs:
       - name: Run production migration
         run: npx prisma migrate deploy
         env:
-          DATABASE_URL: postgres://dbxwqbbvzgvmus:bdc406d1da586b9df23d8b5153c5936b6c04752492b1759a1b33f82bccf0f504@ec2-54-146-73-98.compute-1.amazonaws.com:5432/d1oma4k1pboh15
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - uses: akhileshns/heroku-deploy@v3.4.6
         with:
-          heroku_api_key: 64ff7b3e-4140-41e7-ac8a-2afe1dc9d5f5
-          heroku_app_name: npmg-server
-          heroku_email: titantechsteam@gmail.com
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
