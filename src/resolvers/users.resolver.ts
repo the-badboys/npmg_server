@@ -17,6 +17,7 @@ import {
 } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { users } from '@prisma/client'
+import { ApolloError } from 'apollo-server-express'
 import * as bcrypt from 'bcrypt'
 import { PrismaService } from 'src/prisma.service'
 import { Roles } from '../decorators/roles.decorator'
@@ -107,17 +108,16 @@ export class UsersResolver {
 
   @Mutation(returns => User, { name: 'updateUser' })
   @UseGuards(UserGuard)
-  async updateUser(
-    @Args('data') data: UpdateUserInput,
-    @Context() ctx,
-  ): Promise<users> {
+  async updateUser(@Args('data') data: UpdateUserInput,@Context() ctx): Promise<users> {
+    const user = await this.prismaService.users.findUnique({where: {id: ctx.user.id}})
+    if(!user){
+      throw new ApolloError("User not found","USER_NOT_FOUND");
+    }
     const updatedUser = await this.prismaService.users.update({
       where: {
         id: ctx.user.id,
       },
-      data: {
-        ...data,
-      },
+      data: data
     })
 
     return updatedUser

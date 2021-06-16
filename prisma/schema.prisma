@@ -16,6 +16,9 @@ model users {
   firstName     String
   lastName      String
   role          Role
+  phone         String?
+  district      String?
+  province      String?
   password      String
   createdAt     DateTime        @default(now())
   reports       reports[]
