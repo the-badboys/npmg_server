@@ -108,16 +108,21 @@ export class UsersResolver {
 
   @Mutation(returns => User, { name: 'updateUser' })
   @UseGuards(UserGuard)
-  async updateUser(@Args('data') data: UpdateUserInput,@Context() ctx): Promise<users> {
-    const user = await this.prismaService.users.findUnique({where: {id: ctx.user.id}})
-    if(!user){
-      throw new ApolloError("User not found","USER_NOT_FOUND");
+  async updateUser(
+    @Args('data') data: UpdateUserInput,
+    @Context() ctx,
+  ): Promise<users> {
+    const user = await this.prismaService.users.findUnique({
+      where: { id: ctx.user.id },
+    })
+    if (!user) {
+      throw new ApolloError('User not found', 'USER_NOT_FOUND')
     }
     const updatedUser = await this.prismaService.users.update({
       where: {
         id: ctx.user.id,
       },
-      data: data
+      data: data,
     })
 
     return updatedUser

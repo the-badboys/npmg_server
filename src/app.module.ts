@@ -62,8 +62,7 @@ import { jwtConstants } from './utils/jwtSetup'
             message: 'Not authenticated',
             error: 'Unauthenticated',
           }
-        } 
-        else if (error.extensions.code === 'USER_NOT_FOUND') {
+        } else if (error.extensions.code === 'USER_NOT_FOUND') {
           return {
             status: 400,
             message: 'User not found, Data form token fails in data store',

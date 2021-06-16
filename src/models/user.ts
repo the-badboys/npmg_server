@@ -11,13 +11,13 @@ export class User {
   @Field(type => String)
   firstName: string
 
-  @Field(type => String,{ nullable: true})
+  @Field(type => String, { nullable: true })
   phone: string
 
-  @Field(type => String,{ nullable: true})
+  @Field(type => String, { nullable: true })
   district: string
 
-  @Field(type => String,{ nullable: true})
+  @Field(type => String, { nullable: true })
   province: string
 
   @Field(type => String)

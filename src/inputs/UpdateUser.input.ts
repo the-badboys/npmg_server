@@ -12,13 +12,13 @@ export class UpdateUserInput {
   @Field()
   lastName!: string
 
-  @Field({ nullable: true})
+  @Field({ nullable: true })
   phone!: string
 
-  @Field({ nullable: true})
+  @Field({ nullable: true })
   district!: string
 
-  @Field({ nullable: true})
+  @Field({ nullable: true })
   province!: string
 
   @Field()
